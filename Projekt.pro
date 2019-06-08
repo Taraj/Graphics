@@ -30,14 +30,24 @@ SOURCES += \
     objects/line2.cpp \
     objects/line3.cpp \
     objects/vector2.cpp \
-    objects/vector3.cpp
+    objects/vector3.cpp \
+    dravableObjects/dvector2.cpp \
+    util/scene.cpp \
+    dravableObjects/dline2.cpp \
+    objects/square.cpp \
+    objects/cube.cpp
 
 HEADERS += \
         mainwindow.h \
     objects/line2.h \
     objects/line3.h \
     objects/vector2.h \
-    objects/vector3.h
+    objects/vector3.h \
+    dravableObjects/dvector2.h \
+    util/scene.h \
+    dravableObjects/dline2.h \
+    objects/square.h \
+    objects/cube.h
 
 FORMS += \
         mainwindow.ui

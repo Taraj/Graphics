@@ -9,7 +9,8 @@
 #include <objects/line3.h>
 #include <objects/vector2.h>
 #include <objects/vector3.h>
-
+#include <dravableObjects/dvector2.h>
+#include <util/scene.h>
 namespace Ui {
 class MainWindow;
 }
@@ -30,8 +31,8 @@ private slots:
     void paintEvent(QPaintEvent*);
 private:
     Ui::MainWindow *ui;  
-    QImage *img;
-    void prosto(Line2 a);
+    QImage img;
+
 };
 
 #endif // MAINWINDOW_H

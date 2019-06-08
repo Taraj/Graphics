@@ -19,7 +19,7 @@ public:
     void setA(Vector3 a);
     void setB(Vector3 b);
 
-private:
+protected:
     Vector3 a;
     Vector3 b;
 

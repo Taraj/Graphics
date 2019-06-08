@@ -25,7 +25,7 @@ public:
     void setY(const int &y);
     void setZ(const int &y);
 
-private:
+protected:
     Vector3(const double &x, const double &y, const double &z);
     double x;
     double y;
