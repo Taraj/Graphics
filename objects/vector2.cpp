@@ -18,7 +18,7 @@ bool Vector2::operator==(const Vector2 &vector){
 }
 
 std::ostream& operator<<(std::ostream &out, const Vector2 &vector){
-    out << "Point(x: " << vector.x << ", y: " << vector.y <<")";
+    out << "Vector2(x: " << vector.x << ", y: " << vector.y <<")";
     return out;
 }
 
@@ -46,6 +46,11 @@ Vector2 Vector2::operator+(const Vector2 &vector){
 
 Vector2 Vector2::operator-(const Vector2 &vector){
     return Vector2(this->x - vector.x, this->y - vector.y);
+}
+
+void Vector2::operator=(const Vector2 &vector){
+    this->x = vector.x;
+    this->y = vector.y;
 }
 
 int Vector2::getX(){
