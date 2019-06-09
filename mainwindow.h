@@ -4,7 +4,8 @@
 #include <QMainWindow>
 #include <QPainter>
 #include <QImage>
-
+#include <QMouseEvent>
+#include <QTime>
 #include <objects/line2.h>
 #include <objects/line3.h>
 #include <objects/vector2.h>
@@ -24,8 +25,11 @@ public:
 
     Vector3 position = Vector3(0, 0, 0);
     Vector3 rotation = Vector3(0, 0, 0);
-
+    Vector2 lastMouse;
+    int lastTime;
 private slots:
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
     void on_pushButton_clicked();
     void paintEvent(QPaintEvent*);
     void on_horizontalSlider_valueChanged(int value);
@@ -43,6 +47,8 @@ private:
     Ui::MainWindow *ui;  
     QImage img;
     void laod();
+    QTime timer;
+
 };
 
 #endif // MAINWINDOW_H

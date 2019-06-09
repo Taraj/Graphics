@@ -33,6 +33,8 @@ QImage Scene3::render(const Vector3 &position,  Vector3 rotation){
 
     for (unsigned int i = 0; i < cubes.size(); i++) {
         cubes[i].translate(position);
+        cubes[i].rotateAroundY(position, rotation.getY());
+        cubes[i].rotateAroundX(position, rotation.getX());
         cubes[i].rotateAroundY(baseVector, rotation.getY());
         cubes[i].rotateAroundX(baseVector, rotation.getX());
         cubes[i].rotateAroundZ(baseVector, rotation.getZ());
@@ -146,7 +148,6 @@ void Scene3::drawSquare(Square3 square, unsigned char *ptr, QColor color ,Vector
 }
 
 Vector2 Scene3::convert(Vector3 vector, Vector3 center){
-    std::cout<<vector<<std::endl;
     double tmp = (1.0+(vector.getZ()/d));
          if(tmp == 0){
             tmp=0.001;
