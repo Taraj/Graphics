@@ -35,7 +35,8 @@ SOURCES += \
     util/scene.cpp \
     dravableObjects/dline2.cpp \
     objects/square.cpp \
-    objects/cube.cpp
+    objects/cube.cpp \
+    util/dravable2.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -47,7 +48,8 @@ HEADERS += \
     util/scene.h \
     dravableObjects/dline2.h \
     objects/square.h \
-    objects/cube.h
+    objects/cube.h \
+    util/dravable2.h
 
 FORMS += \
         mainwindow.ui

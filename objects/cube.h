@@ -8,6 +8,8 @@ public:
     Cube(const Vector3 &center, unsigned int &size);
 
 
+private:
+    Vector3 center;
 
 
 };
