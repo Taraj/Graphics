@@ -14,6 +14,8 @@ public:
     void rotateAroundZ(const Vector3 &vector, double angleInDegree);
     Vector3 getNormalVector();
 
+    void translate(const Vector3 &vector);
+
     Line3 getA();
     Line3 getB();
     Line3 getC();

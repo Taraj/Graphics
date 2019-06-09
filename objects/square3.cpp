@@ -41,6 +41,13 @@ Vector3 Square3::getNormalVector(){
     this->a.toVector().crossProduct(this->b.toVector());
 }
 
+void Square3::translate(const Vector3 &vector){
+    a.translate(vector);
+    b.translate(vector);
+    c.translate(vector);
+    d.translate(vector);
+}
+
 Line3 Square3::getA(){
     return this->a;
 }

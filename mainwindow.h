@@ -22,16 +22,27 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    Vector2 be = Vector2(300, 300);
-        Vector2 sro = Vector2(400, 400);
-      Line2 lin = Line2(Vector2(100,100), Vector2(300,101));
+    Vector3 position = Vector3(0, 0, 0);
+    Vector3 rotation = Vector3(0, 0, 0);
+
 private slots:
     void on_pushButton_clicked();
     void paintEvent(QPaintEvent*);
+    void on_horizontalSlider_valueChanged(int value);
+    void on_horizontalSlider_2_valueChanged(int value);
+
+    void on_horizontalSlider_3_valueChanged(int value);
+
+    void on_verticalSlider_valueChanged(int value);
+
+    void on_verticalSlider_2_valueChanged(int value);
+
+    void on_verticalSlider_3_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;  
     QImage img;
-
+    void laod();
 };
 
 #endif // MAINWINDOW_H

@@ -61,7 +61,13 @@ Vector3 Vector3::operator-(const Vector3 &vector){
      return Vector3(this->x - vector.x, this->y - vector.y, this->z - vector.z);
 }
 bool Vector3::operator==(const Vector3 &vector){
-     return this->x == vector.x && this->y == vector.y && this->z == vector.z;
+    return this->x == vector.x && this->y == vector.y && this->z == vector.z;
+}
+
+void Vector3::transalte(const Vector3 &vector){
+    this->x+=vector.x;
+    this->y+=vector.y;
+    this->z+=vector.z;
 }
 
 std::ostream& operator<<(std::ostream &out, const Vector3 &vector){

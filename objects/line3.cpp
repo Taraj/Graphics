@@ -37,6 +37,11 @@ void Line3::rotateAroundZ(const Vector3 &vector, double angleInDegree){
    this->b.rotateAroundZ(vector, angleInDegree);
 }
 
+void Line3::translate(const Vector3 &vector){
+    this->a.transalte(vector);
+    this->b.transalte(vector);
+}
+
 Vector3 Line3::getA(){
     return a;
 }

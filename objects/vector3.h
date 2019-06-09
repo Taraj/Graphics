@@ -18,6 +18,9 @@ public:
     Vector3 operator-(const Vector3 &vector);
     void operator=(const Vector3 &vector);
     bool operator==(const Vector3 &vector);
+
+    void transalte(const Vector3 &vector);
+
     friend std::ostream& operator<<(std::ostream &out, const Vector3 &vector);
     int getX();
     int getY();

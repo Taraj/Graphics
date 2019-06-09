@@ -13,6 +13,7 @@ public:
     void operator=(const Line2 &line);
     friend std::ostream& operator<<(std::ostream &out, const Line2 &vector);
     void rotateAround(const Vector2 &vector, double angleInDegree);
+
     Vector2 getA();
     Vector2 getB();
     void setA(Vector2 a);

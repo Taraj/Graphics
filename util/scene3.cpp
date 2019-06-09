@@ -1,13 +1,61 @@
 #include "scene3.h"
 
-Scene3::Scene3(const int &width, const int &height): width(width), height(height){
+Scene3::Scene3(const int &width, const int &height): width(width), height(height), screenCenter(Vector2(width/2, height/2)){
 
 }
 
-QImage Scene3::render(){
+QImage Scene3::render(const Vector3 &position,  Vector3 rotation){
     QImage image = QImage(this->width, this->height, QImage::Format_RGB32);
     image.fill(0);
-    unsigned char *ptr = image.bits();
+    Vector3 baseVector = Vector3(0, 0, static_cast<int>(-2*d));
+
+    unsigned char *ptr = image.bits();  
+    for (unsigned int i = 0; i < points.size(); i++) {
+        points[i].transalte(position);
+        points[i].rotateAroundY(baseVector, rotation.getY());
+        points[i].rotateAroundX(baseVector, rotation.getX());
+        points[i].rotateAroundZ(baseVector, rotation.getZ());
+    }
+
+    for (unsigned int i = 0; i < lines.size(); i++) {
+        lines[i].translate(position);
+        lines[i].rotateAroundY(baseVector, rotation.getY());
+        lines[i].rotateAroundX(baseVector, rotation.getX());
+        lines[i].rotateAroundZ(baseVector, rotation.getZ());
+    }
+
+    for (unsigned int i = 0; i < squares.size(); i++) {
+        squares[i].translate(position);
+        lines[i].rotateAroundY(baseVector, rotation.getY());
+        lines[i].rotateAroundX(baseVector, rotation.getX());
+        lines[i].rotateAroundZ(baseVector, rotation.getZ());
+    }
+
+    for (unsigned int i = 0; i < cubes.size(); i++) {
+        cubes[i].translate(position);
+        cubes[i].rotateAroundY(baseVector, rotation.getY());
+        cubes[i].rotateAroundX(baseVector, rotation.getX());
+        cubes[i].rotateAroundZ(baseVector, rotation.getZ());
+    }
+
+
+
+    const int maxX = screenCenter.getX() + pointSize;
+    const int minX = screenCenter.getX() - pointSize;
+
+    const int maxY = screenCenter.getY() + pointSize;
+    const int minY = screenCenter.getY() - pointSize;
+
+    for (int y = minY; y < maxY; y++) {
+        for (int x = minX; x < maxX; x++) {
+            draw(ptr, QColor(255,0, 255), x, y);
+        }
+    }
+
+
+
+
+
     for(Vector3 point: points){
         const int maxX = point.getX() + pointSize;
         const int minX = point.getX() - pointSize;
@@ -23,16 +71,23 @@ QImage Scene3::render(){
     }
 
     for(Line3 line: lines){
-        drawLine(line, ptr, QColor(0,255,0));
+        drawLine(line, ptr, QColor(0,255,0),position);
+    }
+
+    for(Square3 square : squares) {
+        drawSquare(square, ptr,QColor(0,255,0),position);
+    }
+
+    for(Cube cube :cubes){
+        drawSquare(cube.a, ptr,QColor(255,255,0),position);
+        drawSquare(cube.b, ptr,QColor(255,255,0),position);
+        drawSquare(cube.c, ptr,QColor(255,255,0),position);
+        drawSquare(cube.d, ptr,QColor(255,255,0),position);
+        drawSquare(cube.e, ptr,QColor(255,255,0),position);
+        drawSquare(cube.f, ptr,QColor(255,255,0),position);
     }
 
 
-    for (Square3 square : squares) {
-        drawLine(square.getA(), ptr, QColor(0,255,0));
-        drawLine(square.getB(), ptr, QColor(0,255,0));
-        drawLine(square.getC(), ptr, QColor(0,255,0));
-        drawLine(square.getD(), ptr, QColor(0,255,0));
-    }
     return image;
 }
 
@@ -52,11 +107,51 @@ void Scene3::add(const Cube &cube){
     cubes.push_back(cube);
 }
 
-void  Scene3::drawLine(Line3 line, unsigned char *ptr, QColor color){
-    drawLine(Line2(
-                 Vector2(line.getA().getX(),line.getA().getY()),
-                 Vector2(line.getB().getX(),line.getB().getY())
-                 ), ptr, color);
+void  Scene3::drawLine(Line3 line, unsigned char *ptr, QColor color, Vector3 center){
+
+    if(line.getA().getZ()<=-d && line.getB().getZ()<=-d){
+        return;
+    }
+
+    if(line.getA().getZ()<=-d){
+
+
+        Vector3 tmp = line.getA();
+        tmp.setZ((-d)+1);
+
+        drawLine(Line2(convert(tmp,center), convert(line.getB(), center)), ptr, color);
+
+          return;
+    }
+
+    if(line.getB().getZ()<=-d){
+
+        Vector3 tmp = line.getB();
+        tmp.setZ((-d)+1);
+
+        drawLine(Line2(convert(line.getA(),center), convert(tmp, center)), ptr, color);
+
+          return;
+    }
+
+    drawLine(Line2(convert(line.getA(),center), convert(line.getB(), center)), ptr, color);
+
+}
+
+void Scene3::drawSquare(Square3 square, unsigned char *ptr, QColor color ,Vector3 center){
+    drawLine(square.getA(), ptr, color, center);
+    drawLine(square.getB(), ptr, color, center);
+    drawLine(square.getC(), ptr, color, center);
+    drawLine(square.getD(), ptr, color, center);
+}
+
+Vector2 Scene3::convert(Vector3 vector, Vector3 center){
+    std::cout<<vector<<std::endl;
+    double tmp = (1.0+(vector.getZ()/d));
+         if(tmp == 0){
+            tmp=0.001;
+         }
+     return Vector2(static_cast<int>(std::round((vector.getX())/tmp)), static_cast<int>(std::round((vector.getY())/tmp))) + screenCenter;
 }
 
 void Scene3::drawLine(Line2 line, unsigned char *ptr, QColor color){

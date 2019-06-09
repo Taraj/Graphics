@@ -6,25 +6,126 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>874</width>
-    <height>686</height>
+    <width>837</width>
+    <height>1213</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QSlider" name="horizontalSlider">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>490</y>
-      <width>75</width>
-      <height>23</height>
+      <x>30</x>
+      <y>830</y>
+      <width>160</width>
+      <height>22</height>
      </rect>
     </property>
-    <property name="text">
-     <string>PushButton</string>
+    <property name="minimum">
+     <number>-1000</number>
+    </property>
+    <property name="maximum">
+     <number>1000</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="horizontalSlider_2">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>870</y>
+      <width>160</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>-1000</number>
+    </property>
+    <property name="maximum">
+     <number>1000</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="horizontalSlider_3">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>910</y>
+      <width>160</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>-1000</number>
+    </property>
+    <property name="maximum">
+     <number>1000</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="verticalSlider">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>780</y>
+      <width>22</width>
+      <height>160</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>-360</number>
+    </property>
+    <property name="maximum">
+     <number>360</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="verticalSlider_2">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>780</y>
+      <width>22</width>
+      <height>160</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>-360</number>
+    </property>
+    <property name="maximum">
+     <number>360</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="verticalSlider_3">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>780</y>
+      <width>22</width>
+      <height>160</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>-360</number>
+    </property>
+    <property name="maximum">
+     <number>360</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
     </property>
    </widget>
   </widget>
@@ -33,7 +134,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>874</width>
+     <width>837</width>
      <height>21</height>
     </rect>
    </property>

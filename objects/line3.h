@@ -14,6 +14,9 @@ public:
     void rotateAroundX(const Vector3 &vector, double angleInDegree);
     void rotateAroundY(const Vector3 &vector, double angleInDegree);
     void rotateAroundZ(const Vector3 &vector, double angleInDegree);
+
+    void translate(const Vector3 &vector);
+
     Vector3 toVector();
     Vector3 getA();
     Vector3 getB();
