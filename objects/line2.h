@@ -18,7 +18,7 @@ public:
     void setA(Vector2 a);
     void setB(Vector2 b);
 
-protected:
+private:
     Vector2 a;
     Vector2 b;
 };

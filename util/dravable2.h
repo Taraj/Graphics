@@ -2,36 +2,21 @@
 #define DRAVABLE2_H
 
 #include <QColor>
-
+#include <objects/vector2.h>
 
 template <typename T>
 class Dravable2{
 public:
-    Dravable2(const T &object, const int &zIndex, const QColor &color);
-
+    Dravable2(const T &object, const QColor &color = QColor(0,255,0));
     void operator=(const Dravable2<T> &dravable);
-
-
-
     bool operator==(const  Dravable2<T> &dravable);
-
-    bool operator> (Dravable2<T> &dravable);
-    bool operator<= (Dravable2<T> &dravable);
-
-    bool operator< (Dravable2<T> &dravable);
-    bool operator>= (Dravable2<T> &dravable);
-
     void setColor(const QColor &color);
-    void setZIndex(const int &zIndex);
     void setObject(const T &object);
-
     QColor getColor();
-    int getZIndex();
     T getObject();
 
-
 private:
-    int zIndex;
+
     QColor color;
     T object;
 };

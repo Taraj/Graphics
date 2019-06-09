@@ -14,12 +14,13 @@ public:
     void rotateAroundX(const Vector3 &vector, double angleInDegree);
     void rotateAroundY(const Vector3 &vector, double angleInDegree);
     void rotateAroundZ(const Vector3 &vector, double angleInDegree);
+    Vector3 toVector();
     Vector3 getA();
     Vector3 getB();
     void setA(Vector3 a);
     void setB(Vector3 b);
 
-protected:
+private:
     Vector3 a;
     Vector3 b;
 

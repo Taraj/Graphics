@@ -13,6 +13,7 @@ public:
     void rotateAroundX(const Vector3 &vector, double angleInDegree);
     void rotateAroundY(const Vector3 &vector, double angleInDegree);
     void rotateAroundZ(const Vector3 &vector, double angleInDegree);
+    Vector3 crossProduct(const Vector3 &vector);
     Vector3 operator+(const Vector3 &vector);
     Vector3 operator-(const Vector3 &vector);
     void operator=(const Vector3 &vector);
@@ -25,7 +26,7 @@ public:
     void setY(const int &y);
     void setZ(const int &y);
 
-protected:
+private:
     Vector3(const double &x, const double &y, const double &z);
     double x;
     double y;

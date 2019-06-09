@@ -98,3 +98,11 @@ void Vector3::operator=(const Vector3 &vector){
     this->y = vector.y;
     this->z = vector.z;
 }
+
+Vector3 Vector3::crossProduct(const Vector3 &vector){
+  return Vector3(
+              this->y*vector.z - this->z*vector.y,
+              this->z*vector.x - this->x*vector.z,
+              this->x*vector.y - this->y*vector.x
+                );
+}

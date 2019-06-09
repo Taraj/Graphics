@@ -27,16 +27,13 @@ void MainWindow::paintEvent(QPaintEvent*)
 void MainWindow::on_pushButton_clicked()
 {
 
-    Scene scene(1000,500);
+    Scene3 scene(1000,500);
 
-    scene.setPoints(std::vector<DVector2>{
-                        DVector2(100,100, QColor(255,0,0)),
-                        DVector2(100,500, QColor(255,255,0))
-                    });
-
-    scene.setLines(std::vector<DLine2>{
-                DLine2(Vector2(123, 1231), Vector2(500,0), QColor(255,0,255))
-                });
+    scene.add(Vector3(100,100,100));
+Square3 s = Square3(Vector3(200,200,200),100);
+    scene.add(s);
+s.rotateAroundX(Vector3(200,200,200),30);
+scene.add(s);
 
     img = scene.render();
 

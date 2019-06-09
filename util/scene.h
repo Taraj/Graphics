@@ -3,26 +3,30 @@
 
 #include <QImage>
 #include <vector>
-#include <dravableObjects/dvector2.h>
-#include <dravableObjects/dline2.h>
+#include <util/dravable2.h>
+#include <util/dravable2.cpp>
+#include <objects/vector2.h>
+#include <objects/line2.h>
+
 
 class Scene{
 public:
     Scene(const int &width, const int &height);
     QImage render();
 
-    void setPoints(std::vector<DVector2> points);
-    void setLines(std::vector<DLine2> lines);
+    void add(Dravable2<Vector2> point);
+    void add(Dravable2<Line2> line);
+
 
 private:
-    std::vector<DVector2> points;
+    std::vector<Dravable2<Vector2> > points;
     const int width;
     const int height;
-    std::vector<DLine2> lines;
+    std::vector<Dravable2<Line2> > lines;
 
     static const int pointSize = 5;
 
-    void drawLine(DLine2 line, unsigned char *ptr);
+    void drawLine(Dravable2<Line2> line, unsigned char *ptr);
 
 
     inline void draw(unsigned char *ptr, QColor color, const int &x, const int &y);

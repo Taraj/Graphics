@@ -31,12 +31,11 @@ SOURCES += \
     objects/line3.cpp \
     objects/vector2.cpp \
     objects/vector3.cpp \
-    dravableObjects/dvector2.cpp \
     util/scene.cpp \
-    dravableObjects/dline2.cpp \
-    objects/square.cpp \
     objects/cube.cpp \
-    util/dravable2.cpp
+    util/dravable2.cpp \
+    util/scene3.cpp \
+    objects/square3.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -44,12 +43,11 @@ HEADERS += \
     objects/line3.h \
     objects/vector2.h \
     objects/vector3.h \
-    dravableObjects/dvector2.h \
     util/scene.h \
-    dravableObjects/dline2.h \
-    objects/square.h \
     objects/cube.h \
-    util/dravable2.h
+    util/dravable2.h \
+    util/scene3.h \
+    objects/square3.h
 
 FORMS += \
         mainwindow.ui

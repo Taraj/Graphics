@@ -57,3 +57,7 @@ void Line3::operator=(const Line3 &line){
     this->a = line.a;
     this->b = line.b;
 }
+
+Vector3 Line3::toVector(){
+    return this->a - this->b;
+}
