@@ -9,8 +9,6 @@
 #include <objects/line3.h>
 #include <objects/vector2.h>
 #include <objects/vector3.h>
-#include <util/dravable2.h>
-#include <util/scene.h>
 #include <util/scene3.h>
 namespace Ui {
 class MainWindow;

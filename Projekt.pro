@@ -31,9 +31,7 @@ SOURCES += \
     objects/line3.cpp \
     objects/vector2.cpp \
     objects/vector3.cpp \
-    util/scene.cpp \
     objects/cube.cpp \
-    util/dravable2.cpp \
     util/scene3.cpp \
     objects/square3.cpp
 
@@ -43,9 +41,7 @@ HEADERS += \
     objects/line3.h \
     objects/vector2.h \
     objects/vector3.h \
-    util/scene.h \
     objects/cube.h \
-    util/dravable2.h \
     util/scene3.h \
     objects/square3.h
 
