@@ -37,6 +37,8 @@ private:
     Vector2 convert(Vector3 vector, Vector3 center);
 
     void drawTriangle(Vector3 a, Vector3 b, Vector3 c, unsigned char *ptr,Vector3 center);
+    void drawTriangle(Vector2 a, Vector2 b, Vector2 c, unsigned char *ptr);
+    std::pair<double, double> bar(Vector2 p,Vector2 a,Vector2 b, Vector2 c);
 
     inline void draw(unsigned char *ptr, QColor color, const int &x, const int &y);
 };

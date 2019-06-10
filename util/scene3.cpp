@@ -45,6 +45,7 @@ QImage Scene3::render(const Vector3 &position,  Vector3 rotation){
 
 
 
+
     const int maxX = screenCenter.getX() + pointSize;
     const int minX = screenCenter.getX() - pointSize;
 
@@ -166,35 +167,6 @@ void Scene3::drawSquare(Square3 square, unsigned char *ptr, QColor color ,Vector
                 ptr,
                 center
                 );
-
-
-
-
-
-
-    /*
-    drawTriangle(
-                 Line3(square.getB().getA(),square.getC().getB()),
-                 Line3(square.getB().getA(),square.getC().getB()),
-
-
-
-                Line3(square.getB().getA(),square.getC().getB()),
-                ptr,
-                center
-                );
-    */
-
-
-    /*
-    drawLine(square.getA(), ptr, color, center);
-    drawLine(square.getB(), ptr, color, center);
-
-    drawLine(Line3(square.getB().getA(),square.getC().getB()), ptr,  QColor(255,255,255), center);
-
-
-    drawLine(square.getC(), ptr, color, center);
-    drawLine(square.getD(), ptr, color, center);*/
 }
 
 Vector2 Scene3::convert(Vector3 vector, Vector3 center){
@@ -206,9 +178,66 @@ Vector2 Scene3::convert(Vector3 vector, Vector3 center){
 }
 
 void Scene3::drawTriangle(Vector3 a, Vector3 b, Vector3 c, unsigned char *ptr,Vector3 center){
-drawLine(Line3(a, b), ptr, QColor(255,0,0), center);
-drawLine(Line3(a, c), ptr, QColor(255,0,0), center);
-drawLine(Line3(b, c), ptr, QColor(255,255,0), center);
+    drawTriangle(convert(a,center), convert(b,center), convert(c, center), ptr);
+}
+
+void Scene3::drawTriangle(Vector2 a, Vector2 b, Vector2 c, unsigned char *ptr){
+
+int yMin = std::min(a.getY(), std::min(b.getY(), c.getY()));
+int yMax = std::max(a.getY(), std::max(b.getY(), c.getY()));
+
+int xMin = std::min(a.getX(), std::min(b.getX(), c.getX()));
+int xMax = std::max(a.getX(), std::max(b.getX(), c.getX()));
+
+for (int y = yMin; y < yMax; y++) {
+    for (int x = xMin; x < xMax; x++) {
+
+        std::pair<double, double> ba = bar(Vector2(x,y), a, b, c);
+        double v = ba.first;
+        double w = ba.second;
+        double u = 1-w-v;
+        if(
+                v>0 && v<1
+                &&
+                w>0 && w<1
+                &&
+                u>0 && u<1
+
+                ){
+        //    int xt =u*tru1[0].first+v* tru1[1].first+w*tru1[2].first;
+           // int yt =u*tru1[0].second+v* tru1[1].second+w*tru1[2].second;
+
+
+          //  unsigned char *ptr = target.bits();
+          //  unsigned char *sr = source.bits();
+           // ptr[500*4*y + 4*x] =  sr[500*4*yt + 4*xt];
+          //  ptr[500*4*y + 4*x + 1] =  sr[500*4*yt + 4*xt+1];
+          //  ptr[500*4*y + 4*x + 2] =  sr[500*4*yt + 4*xt+2];
+            draw(ptr,QColor(255,255,0),x,y);
+        }
+
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    drawLine(Line2(a, b), ptr, QColor(255,0,0));
+    drawLine(Line2(a, c), ptr, QColor(255,0,0));
+    drawLine(Line2(b, c), ptr, QColor(255,255,0));
 }
 
 void Scene3::drawLine(Line2 line, unsigned char *ptr, QColor color){
@@ -294,6 +323,33 @@ void Scene3::drawLine(Line2 line, unsigned char *ptr, QColor color){
          }
 
 }
+
+
+
+
+
+
+
+std::pair<double, double> Scene3::bar(Vector2 p,Vector2 a,Vector2 b, Vector2 c){
+    double vg= (p.getX()-a.getX())*(c.getY()-a.getY())-(c.getX()-a.getX())*(p.getY()-a.getY());
+    double wg = (b.getX()-a.getX())*(p.getY()-a.getY())-(p.getX()-a.getX())*(b.getY()-a.getY());
+
+    double vd = (b.getX()-a.getX())*(c.getY()-a.getY())-(c.getX()-a.getX())*(b.getY()-a.getY());
+    double wd = (b.getX()-a.getX())*(c.getY()-a.getY())-(c.getX()-a.getX())*(b.getY()-a.getY());
+
+    double v =vg/vd;
+    double w =wg/wd;
+
+    return std::make_pair(v,w);
+}
+
+
+
+
+
+
+
+
 
 void Scene3::draw(unsigned char *ptr, QColor color, const int &x, const int &y){
     if(x > 0 && x < width && y > 0 && y < height){
