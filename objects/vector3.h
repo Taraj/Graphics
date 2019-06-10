@@ -14,6 +14,7 @@ public:
     void rotateAroundY(const Vector3 &vector, double angleInDegree);
     void rotateAroundZ(const Vector3 &vector, double angleInDegree);
     Vector3 crossProduct(const Vector3 &vector);
+    double dotProduct(const Vector3 &vector);
     Vector3 operator+(const Vector3 &vector);
     Vector3 operator-(const Vector3 &vector);
     void operator=(const Vector3 &vector);

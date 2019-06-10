@@ -38,7 +38,7 @@ void Square3::rotateAroundZ(const Vector3 &vector, double angleInDegree){
 }
 
 Vector3 Square3::getNormalVector(){
-    this->a.toVector().crossProduct(this->b.toVector());
+   return this->a.toVector().crossProduct(this->b.toVector());
 }
 
 void Square3::translate(const Vector3 &vector){

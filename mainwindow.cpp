@@ -8,8 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     img =  QImage(1000, 500, QImage::Format_RGB32);
-    img.fill(0);
 
+laod();
 }
 
 MainWindow::~MainWindow()
@@ -18,7 +18,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event){
-    Vector2 currentMouse = Vector2(event->x(), event->y()) - Vector2(this->size().width()/2,this->size().height()/2);
+    Vector2 currentMouse = Vector2(-event->x(), event->y()) - Vector2(this->size().width()/2,this->size().height()/2);
     Vector2 deltaMove = currentMouse - lastMouse;
     rotation.setY(rotation.getY() + std::round(deltaMove.getX()/10.0));
     rotation.setX(rotation.getX() + std::round(deltaMove.getY()/10.0));
@@ -28,7 +28,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event){
-    lastMouse = Vector2(event->x(), event->y())-Vector2(this->size().width()/2,this->size().height()/2);
+    lastMouse = Vector2(-event->x(), event->y())-Vector2(this->size().width()/2,this->size().height()/2);
 }
 
 void MainWindow::paintEvent(QPaintEvent*)
@@ -61,7 +61,7 @@ void MainWindow::on_horizontalSlider_2_valueChanged(int value)
 
 void MainWindow::laod()
 {
-    Scene3 scene(1920,1000);
+    Scene3 scene(this->size().width(),this->size().height());
 
   //  scene.add(Vector3(100,100,100));
   //  Square3 s = Square3(Vector3(200,200,200), 100);
@@ -69,9 +69,15 @@ void MainWindow::laod()
 
     scene.add(Cube(Vector3(0,0,0), 100));
 
-     scene.add(Cube(Vector3(800,300,400), 50));
+    Cube cub = Cube(Vector3(200,0,0), 50);
+    cub.rotateAroundY(Vector3(200,0,0),20);
+    scene.add(cub);
 
 
+      //  scene.add( Line3(Vector3(0,0,1000),Vector3(0,0,-1000)));
+   //  scene.add(Cube(Vector3(800,300,400), 50));
+
+   // scene.add(Cube(Vector3(100,100,100),100));
   //  s.rotateAroundX(Vector3(200,200,200),30);
    // scene.add(s);
 

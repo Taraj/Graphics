@@ -26,17 +26,18 @@ QImage Scene3::render(const Vector3 &position,  Vector3 rotation){
 
     for (unsigned int i = 0; i < squares.size(); i++) {
         squares[i].translate(position);
-        lines[i].rotateAroundY(baseVector, rotation.getY());
-        lines[i].rotateAroundX(baseVector, rotation.getX());
-        lines[i].rotateAroundZ(baseVector, rotation.getZ());
+        squares[i].rotateAroundX(baseVector, rotation.getX());
+        squares[i].rotateAroundY(baseVector, rotation.getY());
+        squares[i].rotateAroundZ(baseVector, rotation.getZ());
     }
 
     for (unsigned int i = 0; i < cubes.size(); i++) {
         cubes[i].translate(position);
-        cubes[i].rotateAroundY(position, rotation.getY());
         cubes[i].rotateAroundX(position, rotation.getX());
-        cubes[i].rotateAroundY(baseVector, rotation.getY());
+        cubes[i].rotateAroundY(position, rotation.getY());
+        cubes[i].rotateAroundZ(position, rotation.getZ());
         cubes[i].rotateAroundX(baseVector, rotation.getX());
+        cubes[i].rotateAroundY(baseVector, rotation.getY());
         cubes[i].rotateAroundZ(baseVector, rotation.getZ());
     }
 
@@ -80,13 +81,20 @@ QImage Scene3::render(const Vector3 &position,  Vector3 rotation){
         drawSquare(square, ptr,QColor(0,255,0),position);
     }
 
-    for(Cube cube :cubes){
-        drawSquare(cube.a, ptr,QColor(255,255,0),position);
-        drawSquare(cube.b, ptr,QColor(255,255,0),position);
-        drawSquare(cube.c, ptr,QColor(255,255,0),position);
-        drawSquare(cube.d, ptr,QColor(255,255,0),position);
-        drawSquare(cube.e, ptr,QColor(255,255,0),position);
-        drawSquare(cube.f, ptr,QColor(255,255,0),position);
+    Vector3 center = Vector3(0, 0, 1000);
+    for(Cube cube : cubes){
+        if(cube.a.getNormalVector().dotProduct(center + cube.a.getA().getA()) < 0)
+            drawSquare(cube.a, ptr,QColor(255,255,0),position);
+        if(cube.b.getNormalVector().dotProduct(center + cube.b.getA().getA()) < 0)
+            drawSquare(cube.b, ptr,QColor(255,255,0),position);
+        if(cube.c.getNormalVector().dotProduct(center + cube.c.getA().getA()) < 0)
+            drawSquare(cube.c, ptr,QColor(255,255,0),position);
+        if(cube.d.getNormalVector().dotProduct(center + cube.d.getA().getA()) < 0)
+            drawSquare(cube.d, ptr,QColor(255,255,0),position);
+        if(cube.e.getNormalVector().dotProduct(center + cube.e.getA().getA()) < 0)
+            drawSquare(cube.e, ptr,QColor(255,255,0),position);
+        if(cube.f.getNormalVector().dotProduct(center + cube.f.getA().getA()) < 0)
+            drawSquare(cube.f, ptr,QColor(255,255,0),position);
     }
 
 

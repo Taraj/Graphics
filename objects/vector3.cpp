@@ -110,5 +110,9 @@ Vector3 Vector3::crossProduct(const Vector3 &vector){
               this->y*vector.z - this->z*vector.y,
               this->z*vector.x - this->x*vector.z,
               this->x*vector.y - this->y*vector.x
-                );
+              );
+}
+
+double Vector3::dotProduct(const Vector3 &vector){
+    return this->x * vector.x + this->y * vector.y + this->z * vector.z;
 }
