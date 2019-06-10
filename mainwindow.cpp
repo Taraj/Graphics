@@ -69,9 +69,9 @@ void MainWindow::laod()
 
     scene.add(Cube(Vector3(0,0,0), 100));
 
-    Cube cub = Cube(Vector3(200,0,0), 50);
-    cub.rotateAroundY(Vector3(200,0,0),20);
-    scene.add(cub);
+    //Cube cub = Cube(Vector3(200,0,0), 50);
+    //cub.rotateAroundY(Vector3(200,0,0),20);
+    //scene.add(cub);
 
 
       //  scene.add( Line3(Vector3(0,0,1000),Vector3(0,0,-1000)));

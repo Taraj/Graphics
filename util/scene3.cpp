@@ -158,14 +158,17 @@ void Scene3::drawSquare(Square3 square, unsigned char *ptr, QColor color ,Vector
                 square.getB().getB(),
                 square.getA().getA(),
                 ptr,
-                center
+                center,
+                true
                 );
+
     drawTriangle(
                 square.getC().getB(),
                 square.getD().getB(),
                 square.getC().getA(),
                 ptr,
-                center
+                center,
+                false
                 );
 }
 
@@ -177,17 +180,19 @@ Vector2 Scene3::convert(Vector3 vector, Vector3 center){
          return Vector2(static_cast<int>(std::round((vector.getX())/tmp)), static_cast<int>(std::round((vector.getY())/tmp))) + screenCenter;
 }
 
-void Scene3::drawTriangle(Vector3 a, Vector3 b, Vector3 c, unsigned char *ptr,Vector3 center){
-    drawTriangle(convert(a,center), convert(b,center), convert(c, center), ptr);
+void Scene3::drawTriangle(Vector3 a, Vector3 b, Vector3 c, unsigned char *ptr,Vector3 center,bool t){
+    drawTriangle(convert(a,center), convert(b,center), convert(c, center), ptr, t);
 }
 
-void Scene3::drawTriangle(Vector2 a, Vector2 b, Vector2 c, unsigned char *ptr){
+void Scene3::drawTriangle(Vector2 a, Vector2 b, Vector2 c, unsigned char *ptr, bool t){
 
 int yMin = std::min(a.getY(), std::min(b.getY(), c.getY()));
 int yMax = std::max(a.getY(), std::max(b.getY(), c.getY()));
 
 int xMin = std::min(a.getX(), std::min(b.getX(), c.getX()));
 int xMax = std::max(a.getX(), std::max(b.getX(), c.getX()));
+
+QImage text = QImage(":/orig.jpg").scaledToWidth(500);
 
 for (int y = yMin; y < yMax; y++) {
     for (int x = xMin; x < xMax; x++) {
@@ -197,23 +202,30 @@ for (int y = yMin; y < yMax; y++) {
         double w = ba.second;
         double u = 1-w-v;
         if(
-                v>0 && v<1
+                v>=0 && v<=1
                 &&
-                w>0 && w<1
+                w>=0 && w<=1
                 &&
-                u>0 && u<1
+                u>=0 && u<=1
 
                 ){
-        //    int xt =u*tru1[0].first+v* tru1[1].first+w*tru1[2].first;
-           // int yt =u*tru1[0].second+v* tru1[1].second+w*tru1[2].second;
-
+            int xt;
+            int yt;
+            if(t){
+                 xt = (u * 0) + (v * 500) + (w * 0);
+                 yt = (u * 0) + (v * 0) + (w * 500);
+            }else{
+                xt = (u * 500) + (v * 0) + (w * 500);
+                yt = (u * 500) + (v * 500) + (w * 0);
+            }
 
           //  unsigned char *ptr = target.bits();
           //  unsigned char *sr = source.bits();
            // ptr[500*4*y + 4*x] =  sr[500*4*yt + 4*xt];
           //  ptr[500*4*y + 4*x + 1] =  sr[500*4*yt + 4*xt+1];
           //  ptr[500*4*y + 4*x + 2] =  sr[500*4*yt + 4*xt+2];
-            draw(ptr,QColor(255,255,0),x,y);
+
+            draw(ptr, text.pixel(xt,yt),x,y);
         }
 
 
@@ -235,9 +247,9 @@ for (int y = yMin; y < yMax; y++) {
 
 
 
-    drawLine(Line2(a, b), ptr, QColor(255,0,0));
-    drawLine(Line2(a, c), ptr, QColor(255,0,0));
-    drawLine(Line2(b, c), ptr, QColor(255,255,0));
+  //  drawLine(Line2(a, b), ptr, QColor(255,0,0));
+  //  drawLine(Line2(a, c), ptr, QColor(255,0,0));
+  //  drawLine(Line2(b, c), ptr, QColor(255,255,0));
 }
 
 void Scene3::drawLine(Line2 line, unsigned char *ptr, QColor color){
