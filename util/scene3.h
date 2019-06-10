@@ -36,6 +36,8 @@ private:
 
     Vector2 convert(Vector3 vector, Vector3 center);
 
+    void drawTriangle(Vector3 a, Vector3 b, Vector3 c, unsigned char *ptr,Vector3 center);
+
     inline void draw(unsigned char *ptr, QColor color, const int &x, const int &y);
 };
 

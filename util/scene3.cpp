@@ -33,12 +33,14 @@ QImage Scene3::render(const Vector3 &position,  Vector3 rotation){
 
     for (unsigned int i = 0; i < cubes.size(); i++) {
         cubes[i].translate(position);
-        cubes[i].rotateAroundX(position, rotation.getX());
-        cubes[i].rotateAroundY(position, rotation.getY());
-        cubes[i].rotateAroundZ(position, rotation.getZ());
-        cubes[i].rotateAroundX(baseVector, rotation.getX());
-        cubes[i].rotateAroundY(baseVector, rotation.getY());
-        cubes[i].rotateAroundZ(baseVector, rotation.getZ());
+        cubes[i].rotateAroundX(cubes[i].center, rotation.getX());
+        cubes[i].rotateAroundY(cubes[i].center, rotation.getY());
+        cubes[i].rotateAroundZ(cubes[i].center, rotation.getZ());
+
+
+      //  cubes[i].rotateAroundX(baseVector, rotation.getX());
+      //  cubes[i].rotateAroundY(baseVector, rotation.getY());
+      //  cubes[i].rotateAroundZ(baseVector, rotation.getZ());
     }
 
 
@@ -149,10 +151,50 @@ void  Scene3::drawLine(Line3 line, unsigned char *ptr, QColor color, Vector3 cen
 }
 
 void Scene3::drawSquare(Square3 square, unsigned char *ptr, QColor color ,Vector3 center){
+
+    drawTriangle(
+                square.getA().getB(),
+                square.getB().getB(),
+                square.getA().getA(),
+                ptr,
+                center
+                );
+    drawTriangle(
+                square.getC().getB(),
+                square.getD().getB(),
+                square.getC().getA(),
+                ptr,
+                center
+                );
+
+
+
+
+
+
+    /*
+    drawTriangle(
+                 Line3(square.getB().getA(),square.getC().getB()),
+                 Line3(square.getB().getA(),square.getC().getB()),
+
+
+
+                Line3(square.getB().getA(),square.getC().getB()),
+                ptr,
+                center
+                );
+    */
+
+
+    /*
     drawLine(square.getA(), ptr, color, center);
     drawLine(square.getB(), ptr, color, center);
+
+    drawLine(Line3(square.getB().getA(),square.getC().getB()), ptr,  QColor(255,255,255), center);
+
+
     drawLine(square.getC(), ptr, color, center);
-    drawLine(square.getD(), ptr, color, center);
+    drawLine(square.getD(), ptr, color, center);*/
 }
 
 Vector2 Scene3::convert(Vector3 vector, Vector3 center){
@@ -160,7 +202,13 @@ Vector2 Scene3::convert(Vector3 vector, Vector3 center){
          if(tmp == 0){
             tmp=0.001;
          }
-     return Vector2(static_cast<int>(std::round((vector.getX())/tmp)), static_cast<int>(std::round((vector.getY())/tmp))) + screenCenter;
+         return Vector2(static_cast<int>(std::round((vector.getX())/tmp)), static_cast<int>(std::round((vector.getY())/tmp))) + screenCenter;
+}
+
+void Scene3::drawTriangle(Vector3 a, Vector3 b, Vector3 c, unsigned char *ptr,Vector3 center){
+drawLine(Line3(a, b), ptr, QColor(255,0,0), center);
+drawLine(Line3(a, c), ptr, QColor(255,0,0), center);
+drawLine(Line3(b, c), ptr, QColor(255,255,0), center);
 }
 
 void Scene3::drawLine(Line2 line, unsigned char *ptr, QColor color){
