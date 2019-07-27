@@ -20,8 +20,9 @@ public:
     Line3 getB();
     Line3 getC();
     Line3 getD();
-private:
     Vector3 center;
+private:
+
     int size;
     Line3 a, b, c, d;
 };

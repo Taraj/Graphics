@@ -7,9 +7,10 @@ Scene3::Scene3(const int &width, const int &height): width(width), height(height
 QImage Scene3::render(const Vector3 &position,  Vector3 rotation){
     QImage image = QImage(this->width, this->height, QImage::Format_RGB32);
     image.fill(0);
-    Vector3 baseVector = Vector3(0, 0, static_cast<int>(-2*d));
+    Vector3 baseVector = Vector3(0, 0, 0);
 
     unsigned char *ptr = image.bits();  
+    /*
     for (unsigned int i = 0; i < points.size(); i++) {
         points[i].transalte(position);
         points[i].rotateAroundY(baseVector, rotation.getY());
@@ -23,24 +24,41 @@ QImage Scene3::render(const Vector3 &position,  Vector3 rotation){
         lines[i].rotateAroundX(baseVector, rotation.getX());
         lines[i].rotateAroundZ(baseVector, rotation.getZ());
     }
-
+*/
     for (unsigned int i = 0; i < squares.size(); i++) {
         squares[i].translate(position);
-        squares[i].rotateAroundX(baseVector, rotation.getX());
+        //squares[i].rotateAroundX(baseVector, rotation.getX());
         squares[i].rotateAroundY(baseVector, rotation.getY());
-        squares[i].rotateAroundZ(baseVector, rotation.getZ());
+       // squares[i].rotateAroundZ(baseVector, rotation.getZ());
+
+
+      //    const double ratio = 1.0/std::pow(2, ((double)squares[i].center.getZ())/((double)d));
+     //     squares[i].rotateAroundX(squares[i].center, ratio*rotation.getX());
+     //     squares[i].rotateAroundY(squares[i].center, ratio*rotation.getY());
+
     }
 
     for (unsigned int i = 0; i < cubes.size(); i++) {
+
+
         cubes[i].translate(position);
-        cubes[i].rotateAroundX(cubes[i].center, rotation.getX());
-        cubes[i].rotateAroundY(cubes[i].center, rotation.getY());
-        cubes[i].rotateAroundZ(cubes[i].center, rotation.getZ());
-
-
-      //  cubes[i].rotateAroundX(baseVector, rotation.getX());
-      //  cubes[i].rotateAroundY(baseVector, rotation.getY());
+        cubes[i].rotateAroundX(baseVector, rotation.getX());
+        cubes[i].rotateAroundY(baseVector, rotation.getY());
       //  cubes[i].rotateAroundZ(baseVector, rotation.getZ());
+
+
+
+
+       // const double ratio = 1.0/std::pow(2, ((double)cubes[i].center.getZ())/((double)d));
+
+
+      //  cubes[i].rotateAroundX(cubes[i].center, ratio*rotation.getX());
+       // cubes[i].rotateAroundY(cubes[i].center, ratio*rotation.getY());
+       // cubes[i].rotateAroundZ(cubes[i].center, ratio*rotation.getZ());
+
+
+
+
     }
 
 
@@ -60,7 +78,7 @@ QImage Scene3::render(const Vector3 &position,  Vector3 rotation){
 
 
 
-
+/*
 
     for(Vector3 point: points){
         const int maxX = point.getX() + pointSize;
@@ -79,13 +97,15 @@ QImage Scene3::render(const Vector3 &position,  Vector3 rotation){
     for(Line3 line: lines){
         drawLine(line, ptr, QColor(0,255,0),position);
     }
-
+*/
     for(Square3 square : squares) {
         drawSquare(square, ptr,QColor(0,255,0),position);
     }
 
     Vector3 center = Vector3(0, 0, 1000);
+
     for(Cube cube : cubes){
+
         if(cube.a.getNormalVector().dotProduct(center + cube.a.getA().getA()) < 0)
             drawSquare(cube.a, ptr,QColor(255,255,0),position);
         if(cube.b.getNormalVector().dotProduct(center + cube.b.getA().getA()) < 0)
@@ -118,6 +138,11 @@ void Scene3::add(const Square3 &square){
 
 void Scene3::add(const Cube &cube){
     cubes.push_back(cube);
+}
+
+bool Scene3::inArea(Vector2 a)
+{
+    return a.getX() > 0 && a.getX() < width &&a.getY()>0 && a.getY() < width;
 }
 
 void  Scene3::drawLine(Line3 line, unsigned char *ptr, QColor color, Vector3 center){
@@ -153,6 +178,11 @@ void  Scene3::drawLine(Line3 line, unsigned char *ptr, QColor color, Vector3 cen
 
 void Scene3::drawSquare(Square3 square, unsigned char *ptr, QColor color ,Vector3 center){
 
+
+       if(square.center.getZ()<(-d)){
+           return;
+       }
+
     drawTriangle(
                 square.getA().getB(),
                 square.getB().getB(),
@@ -175,7 +205,7 @@ void Scene3::drawSquare(Square3 square, unsigned char *ptr, QColor color ,Vector
 Vector2 Scene3::convert(Vector3 vector, Vector3 center){
     double tmp = (1.0+(vector.getZ()/d));
          if(tmp == 0){
-            tmp=0.001;
+            tmp=0.01;
          }
          return Vector2(static_cast<int>(std::round((vector.getX())/tmp)), static_cast<int>(std::round((vector.getY())/tmp))) + screenCenter;
 }
@@ -186,17 +216,73 @@ void Scene3::drawTriangle(Vector3 a, Vector3 b, Vector3 c, unsigned char *ptr,Ve
 
 void Scene3::drawTriangle(Vector2 a, Vector2 b, Vector2 c, unsigned char *ptr, bool t){
 
-int yMin = std::min(a.getY(), std::min(b.getY(), c.getY()));
-int yMax = std::max(a.getY(), std::max(b.getY(), c.getY()));
+//int yMin = std::max(std::min(a.getY(), std::min(b.getY(), c.getY())), 0);
+//int yMax = std::min(std::max(a.getY(), std::max(b.getY(), c.getY())), height);
 
-int xMin = std::min(a.getX(), std::min(b.getX(), c.getX()));
-int xMax = std::max(a.getX(), std::max(b.getX(), c.getX()));
+//int xMin = std::max(std::min(a.getX(), std::min(b.getX(), c.getX())), 0);
+//int xMax = std::min(std::max(a.getX(), std::max(b.getX(), c.getX())), width);
 
-QImage text = QImage(":/orig.jpg").scaledToWidth(500);
+
+
+
+    int yMin = std::min(a.getY(), std::min(b.getY(), c.getY()));
+    int yMax = std::max(a.getY(), std::max(b.getY(), c.getY()));
+
+    int xMin = std::min(a.getX(), std::min(b.getX(), c.getX()));
+    int xMax = std::max(a.getX(), std::max(b.getX(), c.getX()));
+
+  //  std::cout<<yMin<<std::endl;
+
+    /* std::cout<<xMin<<"="
+                                     <<a.getX()<<","
+                                     <<b.getX()<<","
+                                     <<c.getX()<<","
+                                     <<std::endl;*/
+
+
+   // const int areaY =std::abs(std::abs(yMax) - std::abs(yMin)) ;
+  //  const int areaX = std::abs(std::abs(xMax) -  std::abs(xMin));
+
+
+    if(yMax < 0 || xMax < 0 || yMin > height || xMin > width  /*areaX > width || areaY > height || areaX < 1 || areaY < 1||*/){
+        return;
+    }else if (!inArea(a) && !inArea(b) && !inArea(c)) {
+ return;
+        }
+
+
+
+
+
+
+
+
+
+
+
+/*
+    if(yMin < 0 || xMin < 0 || yMax > height || xMax > width){
+      //  return;
+       std::cout<<yMin<<std::endl;
+        std::cout<<yMax<<std::endl;
+        std::cout<< areaY<<std::endl;
+       std::cout<< areaX<<std::endl;
+        std::cout<<std::endl;
+
+    }
+
+    if(yMax > height) yMax = height;
+    if(xMax > width) xMax = width;
+    if(yMin < 0) yMin = 0;
+    if(xMin < 0) xMin = 0;
+
+
+*/
+
 
 for (int y = yMin; y < yMax; y++) {
     for (int x = xMin; x < xMax; x++) {
-
+        //std::cout<<"qw"<<std::endl;
         std::pair<double, double> ba = bar(Vector2(x,y), a, b, c);
         double v = ba.first;
         double w = ba.second;
@@ -212,11 +298,11 @@ for (int y = yMin; y < yMax; y++) {
             int xt;
             int yt;
             if(t){
-                 xt = (u * 0) + (v * 500) + (w * 0);
-                 yt = (u * 0) + (v * 0) + (w * 500);
+                 xt = (u * 0) + (v * 499) + (w * 0);
+                 yt = (u * 0) + (v * 0) + (w * 499);
             }else{
-                xt = (u * 500) + (v * 0) + (w * 500);
-                yt = (u * 500) + (v * 500) + (w * 0);
+                xt = (u * 499) + (v * 0) + (w * 499);
+                yt = (u * 499) + (v * 499) + (w * 0);
             }
 
           //  unsigned char *ptr = target.bits();
@@ -230,6 +316,7 @@ for (int y = yMin; y < yMax; y++) {
 
 
     }
+
 }
 
 
@@ -247,9 +334,9 @@ for (int y = yMin; y < yMax; y++) {
 
 
 
-  //  drawLine(Line2(a, b), ptr, QColor(255,0,0));
-  //  drawLine(Line2(a, c), ptr, QColor(255,0,0));
-  //  drawLine(Line2(b, c), ptr, QColor(255,255,0));
+    //drawLine(Line2(a, b), ptr, QColor(255,0,0));
+//    drawLine(Line2(a, c), ptr, QColor(255,0,0));
+   // drawLine(Line2(b, c), ptr, QColor(255,255,0));
 }
 
 void Scene3::drawLine(Line2 line, unsigned char *ptr, QColor color){

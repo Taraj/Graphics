@@ -17,6 +17,7 @@ void Square3::operator=(const Square3 &square){
 }
 
 void Square3::rotateAroundX(const Vector3 &vector, double angleInDegree){
+      center.rotateAroundX(vector, angleInDegree);
      a.rotateAroundX(vector, angleInDegree);
      b.rotateAroundX(vector, angleInDegree);
      c.rotateAroundX(vector, angleInDegree);
@@ -24,6 +25,7 @@ void Square3::rotateAroundX(const Vector3 &vector, double angleInDegree){
  }
 
 void Square3::rotateAroundY(const Vector3 &vector, double angleInDegree){
+      center.rotateAroundY(vector, angleInDegree);
     a.rotateAroundY(vector, angleInDegree);
     b.rotateAroundY(vector, angleInDegree);
     c.rotateAroundY(vector, angleInDegree);
@@ -31,6 +33,7 @@ void Square3::rotateAroundY(const Vector3 &vector, double angleInDegree){
 }
 
 void Square3::rotateAroundZ(const Vector3 &vector, double angleInDegree){
+     center.rotateAroundZ(vector, angleInDegree);
     a.rotateAroundZ(vector, angleInDegree);
     b.rotateAroundZ(vector, angleInDegree);
     c.rotateAroundZ(vector, angleInDegree);
@@ -42,6 +45,7 @@ Vector3 Square3::getNormalVector(){
 }
 
 void Square3::translate(const Vector3 &vector){
+    center.transalte(vector);
     a.translate(vector);
     b.translate(vector);
     c.translate(vector);

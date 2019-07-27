@@ -20,7 +20,7 @@ private:
     int width;
     int height;
     constexpr static const double d = 1000;
-
+QImage text = QImage(":/orig.jpg").scaledToWidth(500);
     Vector2 screenCenter;
     std::vector<Vector3> points;
     std::vector<Line3> lines;
@@ -28,7 +28,7 @@ private:
     std::vector<Cube> cubes;
 
     static const int pointSize = 5;
-
+bool inArea(Vector2);
     void drawLine(Line2 line, unsigned char *ptr, QColor color);
     void drawLine(Line3 line, unsigned char *ptr, QColor color, Vector3 center);
 

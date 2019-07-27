@@ -27,6 +27,7 @@ public:
     Vector3 rotation = Vector3(0, 0, 0);
     Vector2 lastMouse;
     int lastTime;
+    Scene3 scene = Scene3(500, 500);
 private slots:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
@@ -42,6 +43,14 @@ private slots:
     void on_verticalSlider_2_valueChanged(int value);
 
     void on_verticalSlider_3_valueChanged(int value);
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
+
+    void on_pushButton_4_clicked();
+
+
 
 private:
     Ui::MainWindow *ui;  

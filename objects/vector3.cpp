@@ -116,3 +116,12 @@ Vector3 Vector3::crossProduct(const Vector3 &vector){
 double Vector3::dotProduct(const Vector3 &vector){
     return this->x * vector.x + this->y * vector.y + this->z * vector.z;
 }
+
+double Vector3::angle(const Vector3 &vector){
+return this->dotProduct(vector)/(this->length()*vector.length());
+}
+
+double Vector3::length() const
+{
+    return  std::sqrt(x*x+y*y+z*z);
+}

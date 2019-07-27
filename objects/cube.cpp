@@ -19,6 +19,7 @@ e.rotateAroundY(center, 180);
 }
 
 void Cube::translate(const Vector3 &vector){
+    center.transalte(vector);
     a.translate(vector);
     b.translate(vector);
     c.translate(vector);
@@ -28,6 +29,7 @@ void Cube::translate(const Vector3 &vector){
 }
 
 void Cube::rotateAroundX(const Vector3 &vector, double angleInDegree){
+      center.rotateAroundX(vector,angleInDegree);
     a.rotateAroundX(vector, angleInDegree);
     b.rotateAroundX(vector, angleInDegree);
     c.rotateAroundX(vector, angleInDegree);
@@ -37,6 +39,7 @@ void Cube::rotateAroundX(const Vector3 &vector, double angleInDegree){
 }
 
 void Cube::rotateAroundY(const Vector3 &vector, double angleInDegree){
+    center.rotateAroundY(vector,angleInDegree);
     a.rotateAroundY(vector, angleInDegree);
     b.rotateAroundY(vector, angleInDegree);
     c.rotateAroundY(vector, angleInDegree);
@@ -46,6 +49,7 @@ void Cube::rotateAroundY(const Vector3 &vector, double angleInDegree){
 }
 
 void Cube::rotateAroundZ(const Vector3 &vector, double angleInDegree){
+    center.rotateAroundZ(vector,angleInDegree);
     a.rotateAroundZ(vector, angleInDegree);
     b.rotateAroundZ(vector, angleInDegree);
     c.rotateAroundZ(vector, angleInDegree);
