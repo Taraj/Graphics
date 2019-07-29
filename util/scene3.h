@@ -1,17 +1,15 @@
 #ifndef SCENE3_H
 #define SCENE3_H
 
-#include <vector>
-#include <objects/line3.h>
-#include <objects/line2.h>
+#include <objects/vector2.h>
+#include <objects/vector3.h>
 #include <objects/square3.h>
-#include <objects/cube.h>
 #include <QImage>
 
 class Scene3 {
 public:
     Scene3(const unsigned int &width, const unsigned int &height);
-    QImage render(const Vector3 &position,  Vector3 rotation);
+    QImage render(const Vector3 &position, const Vector3 &rotation);
 
 
     std::vector<Square3> floor;

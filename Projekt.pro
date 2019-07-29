@@ -27,21 +27,17 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    objects/line2.cpp \
     objects/line3.cpp \
     objects/vector2.cpp \
     objects/vector3.cpp \
-    objects/cube.cpp \
     util/scene3.cpp \
     objects/square3.cpp
 
 HEADERS += \
         mainwindow.h \
-    objects/line2.h \
     objects/line3.h \
     objects/vector2.h \
     objects/vector3.h \
-    objects/cube.h \
     util/scene3.h \
     objects/square3.h
 

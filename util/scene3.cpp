@@ -1,11 +1,10 @@
 #include "scene3.h"
-#include <algorithm>
 
-Scene3::Scene3(const unsigned int &width, const unsigned int &height): width(width), height(height), screenCenter(Vector2(width/2, height/2)){
+Scene3::Scene3(const unsigned int &width, const unsigned int &height): width(width), height(height), screenCenter(width/2, height/2){
 
 }
 
-QImage Scene3::render(const Vector3 &position,  Vector3 rotation){
+QImage Scene3::render(const Vector3 &position, const Vector3 &rotation){
     QImage image = QImage(static_cast<int>(this->width), static_cast<int>(this->height), QImage::Format_RGB32);
     image.fill(0);
 
@@ -41,8 +40,6 @@ QImage Scene3::render(const Vector3 &position,  Vector3 rotation){
     std::sort(walls.begin(), walls.end(), [](const Square3 &a, const Square3 &b) -> bool {
          return a.center.z > b.center.z;
     });
-
-
 
     for(Square3 square : walls) {
         drawSquare(square, ptr, wallTexture);
