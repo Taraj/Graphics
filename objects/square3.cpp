@@ -1,10 +1,10 @@
 #include "square3.h"
 
 Square3::Square3(const Vector3 &center, const int &size): center(center),
-    a(Line3(Vector3(-size, size, 0) + center, Vector3(-size, -size, 0) + center)),
-    b(Line3(Vector3(-size, -size ,0) + center, Vector3(size, -size,0) + center)),
-    c(Line3(Vector3(size, -size,0) + center, Vector3(size, size, 0) + center)),
-    d(Line3(Vector3(size, size, 0) + center, Vector3(-size, size, 0) + center))
+    a(Vector3(-size, -size, 0) + center),
+    b(Vector3(size, -size, 0) + center),
+    c(Vector3(size, size, 0) + center),
+    d(Vector3(-size, size, 0) + center)
 {
 
 }
@@ -34,13 +34,13 @@ void Square3::rotateAroundZ(const Vector3 &vector, const double & angleInDegree)
 }
 
 Vector3 Square3::getNormalVector() const {
-   return this->a.toVector().crossProduct(this->b.toVector());
+   return (this->a - this->b).crossProduct((this->b - this->c));
 }
 
 void Square3::translate(const Vector3 &vector){
     center.transalte(vector);
-    a.translate(vector);
-    b.translate(vector);
-    c.translate(vector);
-    d.translate(vector);
+    a.transalte(vector);
+    b.transalte(vector);
+    c.transalte(vector);
+    d.transalte(vector);
 }

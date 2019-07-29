@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         }
     }
 
+
     img = scene.render(Vector3(0, 0, 0), Vector3(0, 0, 0)).scaledToWidth(1920);
     update();;
 }

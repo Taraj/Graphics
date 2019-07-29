@@ -27,7 +27,6 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    objects/line3.cpp \
     objects/vector2.cpp \
     objects/vector3.cpp \
     util/scene3.cpp \
@@ -35,7 +34,6 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    objects/line3.h \
     objects/vector2.h \
     objects/vector3.h \
     util/scene3.h \

@@ -59,18 +59,18 @@ void Scene3::drawSquare(const Square3 &square, unsigned char *ptr, const unsigne
     }
 
     drawTriangle(
-                square.a.b,
-                square.b.b,
-                square.a.a,
+                square.a,
+                square.b,
+                square.d,
                 ptr,
                 true,
                 texture
                 );
 
     drawTriangle(
-                square.c.b,
-                square.d.b,
-                square.c.a,
+                square.c,
+                square.d,
+                square.b,
                 ptr,
                 false,
                 texture

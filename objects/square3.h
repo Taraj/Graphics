@@ -2,7 +2,6 @@
 #define SQUARE3_H
 
 #include <objects/vector3.h>
-#include <objects/line3.h>
 
 class Square3{
 public:
@@ -14,7 +13,7 @@ public:
     Vector3 getNormalVector() const;
 
     Vector3 center;
-    Line3 a, b, c, d;
+    Vector3 a, b, c, d;
 
 };
 
