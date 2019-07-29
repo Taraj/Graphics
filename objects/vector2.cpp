@@ -7,6 +7,11 @@ Vector2::Vector2(const int &x, const int &y): x(x), y(y){
 Vector2::Vector2(const double &x, const double &y): x(x), y(y){
 }
 
+Vector2::Vector2(const unsigned int &x, const unsigned int &y): x(x), y(y)
+{
+
+}
+
 Vector2::Vector2(const Vector2 &vector): x(vector.x), y(vector.y){
 }
 
@@ -22,7 +27,7 @@ std::ostream& operator<<(std::ostream &out, const Vector2 &vector){
     return out;
 }
 
-double Vector2::distance(const Vector2 &vector){
+double Vector2::distance(const Vector2 &vector) const{
     return std::sqrt(
                 (this->x - vector.x) * (this->x - vector.x)
                                      +

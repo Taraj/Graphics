@@ -10,37 +10,40 @@
 
 class Scene3 {
 public:
-    Scene3(const int &width, const int &height);
-    QImage render(const Vector3 &position = Vector3(0,0,0),  Vector3 rotation = Vector3(0,0,0));
-    void add(const Vector3 &point);
-    void add(const Line3 &line);
-    void add(const Square3 &square);
-    void add(const Cube &cube);
+    Scene3(const unsigned int &width, const unsigned int &height);
+    QImage render(const Vector3 &position,  Vector3 rotation);
+
+
+    std::vector<Square3> floor;
+    std::vector<Square3> walls;
+    std::vector<Square3> ceiling;
 private:
-    int width;
-    int height;
     constexpr static const double d = 1000;
-QImage text = QImage(":/orig.jpg").scaledToWidth(500);
-    Vector2 screenCenter;
-    std::vector<Vector3> points;
-    std::vector<Line3> lines;
-    std::vector<Square3> squares;
-    std::vector<Cube> cubes;
 
-    static const int pointSize = 5;
-bool inArea(Vector2);
-    void drawLine(Line2 line, unsigned char *ptr, QColor color);
-    void drawLine(Line3 line, unsigned char *ptr, QColor color, Vector3 center);
+    const unsigned int width;
+    const unsigned int height;
+    const Vector2 screenCenter;
 
-    void drawSquare(Square3 square,unsigned char *ptr, QColor color, Vector3 center);
 
-    Vector2 convert(Vector3 vector, Vector3 center);
+    const QImage floorSprite = QImage(":/orig.jpg").scaledToWidth(500);
+    const QImage wallSprite = QImage(":/stone.jpg").scaledToWidth(500);
+    const QImage ceilingSprite = QImage(":/coble.jpg").scaledToWidth(500);
 
-    void drawTriangle(Vector3 a, Vector3 b, Vector3 c, unsigned char *ptr,Vector3 center,bool t);
-    void drawTriangle(Vector2 a, Vector2 b, Vector2 c, unsigned char *ptr, bool t);
-    std::pair<double, double> bar(Vector2 p,Vector2 a,Vector2 b, Vector2 c);
 
-    inline void draw(unsigned char *ptr, QColor color, const int &x, const int &y);
+    const unsigned char *floorTexture = floorSprite.bits();
+    const unsigned char *wallTexture = wallSprite.bits();
+    const unsigned char *ceilingTexture = ceilingSprite.bits();
+
+
+    inline bool inArea(const Vector2 &vector);
+    void drawSquare(const Square3 &square, unsigned char *ptr, const unsigned char *texture);
+    Vector2 convert(const Vector3 &vector);
+    void drawTriangle(const Vector3 &a, const Vector3 &b, const Vector3 &c, unsigned char *target, const bool &top, const unsigned char *texture);
+    void drawTriangleOnEdge(const Vector2 &a, const Vector2 &b, const Vector2 &c, unsigned char *target, const bool &top, const unsigned char *texture);
+    void drawTriangleInCenter(const Vector2 &a, const Vector2 &b, const Vector2 &c, unsigned char *target, const bool &top, const unsigned char *texture);
+    inline void copyColor(unsigned char *target, const unsigned int &tx, const unsigned int &ty, const unsigned char *source, const unsigned int &sx, const unsigned int &sy);
+    inline static Vector2 barycentric(const Vector2 &p, const Vector2 &a, const Vector2 &b, const Vector2 &c);
+
 };
 
 #endif // SCENE3_H

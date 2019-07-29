@@ -57,7 +57,7 @@ void Vector3::rotateAroundZ(const Vector3 &vector, double angleInDegree){
 Vector3 Vector3::operator+(const Vector3 &vector){
        return Vector3(this->x + vector.x, this->y + vector.y, this->z + vector.z);
 }
-Vector3 Vector3::operator-(const Vector3 &vector){
+Vector3 Vector3::operator-(const Vector3 &vector)const {
      return Vector3(this->x - vector.x, this->y - vector.y, this->z - vector.z);
 }
 bool Vector3::operator==(const Vector3 &vector){

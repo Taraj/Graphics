@@ -23,7 +23,7 @@ public:
     void setA(Vector3 a);
     void setB(Vector3 b);
 
-private:
+
     Vector3 a;
     Vector3 b;
 

@@ -18,7 +18,7 @@ public:
     double angle(const Vector3 &vector);
     double length() const;
     Vector3 operator+(const Vector3 &vector);
-    Vector3 operator-(const Vector3 &vector);
+    Vector3 operator-(const Vector3 &vector) const;
     void operator=(const Vector3 &vector);
     bool operator==(const Vector3 &vector);
 
@@ -32,7 +32,7 @@ public:
     void setY(const int &y);
     void setZ(const int &y);
 
-private:
+
     Vector3(const double &x, const double &y, const double &z);
     double x;
     double y;

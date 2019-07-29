@@ -13,7 +13,6 @@ public:
     void rotateAroundY(const Vector3 &vector, double angleInDegree);
     void rotateAroundZ(const Vector3 &vector, double angleInDegree);
     Vector3 getNormalVector();
-
     void translate(const Vector3 &vector);
 
     Line3 getA();
@@ -21,7 +20,7 @@ public:
     Line3 getC();
     Line3 getD();
     Vector3 center;
-private:
+
 
     int size;
     Line3 a, b, c, d;

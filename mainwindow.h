@@ -27,22 +27,15 @@ public:
     Vector3 rotation = Vector3(0, 0, 0);
     Vector2 lastMouse;
     int lastTime;
-    Scene3 scene = Scene3(500, 500);
+    const int ratio = 2;
+    Scene3 scene = Scene3(1920/ratio, 1020/ratio);
 private slots:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
-    void on_pushButton_clicked();
+
     void paintEvent(QPaintEvent*);
-    void on_horizontalSlider_valueChanged(int value);
-    void on_horizontalSlider_2_valueChanged(int value);
 
-    void on_horizontalSlider_3_valueChanged(int value);
-
-    void on_verticalSlider_valueChanged(int value);
-
-    void on_verticalSlider_2_valueChanged(int value);
-
-    void on_verticalSlider_3_valueChanged(int value);
+    void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
 
@@ -52,10 +45,13 @@ private slots:
 
 
 
+    void on_pushButton_5_clicked();
+
+    void on_pushButton_6_clicked();
+
 private:
     Ui::MainWindow *ui;  
     QImage img;
-    void laod();
     QTime timer;
 
 };

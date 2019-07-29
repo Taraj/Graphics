@@ -11,28 +11,63 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-    for (int i = -10000;i<10000;i+=200) {
-          //scene.add(Cube(Vector3(i,0,100), 100));
-          for (int j = -1000;j<10000;j+=200) {
-              Square3 tmp(Vector3(i,300,j), 100);
-              tmp.rotateAroundX(tmp.center,90);
-           scene.add(tmp);
+    for (int i = -10000; i < 10000; i += 200) {
+          for (int j = -10000; j < 15000; j += 200) {
+              Square3 tmp(Vector3(i, 300, j), 100);
+              tmp.rotateAroundX(tmp.center, 90);
+              scene.floor.push_back(tmp);
           }
     }
 
-    Cube s = Cube(Vector3(200,200,200), 100);
-      scene.add(s);
+    for (int i = -10000; i < 10000; i += 200) {
+          for (int j = -10000; j < 10000; j += 200) {
+              Square3 tmp(Vector3(i, -100, j), 100);
+              tmp.rotateAroundX(tmp.center, 90);
+              scene.ceiling.push_back(tmp);
+           }
+    }
+
+    for (int i = -10000; i < 10000; i += 200) {
+
+        for (int j = -100; j < 300; j += 200) {
+            Square3 tmp(Vector3(100, j, i), 100);
+            tmp.rotateAroundY(tmp.center, 90);
+            scene.walls.push_back(tmp);
+        }
+
+        for (int j = -100; j < 300; j += 200) {
+            Square3 tmp(Vector3(-100, j, i), 100);
+            tmp.rotateAroundY(tmp.center, 90);
+            scene.walls.push_back(tmp);
+        }
+    }
+
+        /*
+
+        scene.walls.push_back(Square3(Vector3(i, 300, 0), 100));
+        scene.walls.push_back(Square3(Vector3(i, 100, 0), 100));
+        scene.walls.push_back(Square3(Vector3(i, -100, 0), 100));
+        scene.walls.push_back(Square3(Vector3(i, -300, 0), 100));
+
+        scene.walls.push_back(Square3(Vector3(i, 300, 400), 100));
+        scene.walls.push_back(Square3(Vector3(i, 100, 400), 100));
+        scene.walls.push_back(Square3(Vector3(i, -100, 400), 100));
+        scene.walls.push_back(Square3(Vector3(i, -300, 400), 100));*/
+
+
+
+   //  scene.walls.push_back(Square3(Vector3(0, 0, 0), 100));
+   //  scene.walls.push_back(Square3(Vector3(0, 100, 500), 100));
 
 
 
 
+      img = scene.render(Vector3(0,0,0), Vector3(0,0,0)).scaledToWidth(1920);
+      update();
 
 
 
-
-
-
-laod();
+//laod();
 }
 
 MainWindow::~MainWindow()
@@ -41,17 +76,18 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event){
+    /*
   Vector2 currentMouse = Vector2(-event->x(), event->y()) - Vector2(this->size().width()/2,this->size().height()/2);
    Vector2 deltaMove = currentMouse - lastMouse;
    rotation.setY(rotation.getY() + std::round(deltaMove.getX()/10.0));
     rotation.setX(rotation.getX() + std::round(deltaMove.getY()/10.0));
     lastMouse = currentMouse;
-   laod();
-
+  //laod();
+*/
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event){
-    lastMouse = Vector2(-event->x(), event->y())-Vector2(this->size().width()/2,this->size().height()/2);
+    //lastMouse = Vector2(-event->x(), event->y())-Vector2(this->size().width()/2,this->size().height()/2);
 }
 
 void MainWindow::paintEvent(QPaintEvent*)
@@ -62,77 +98,9 @@ void MainWindow::paintEvent(QPaintEvent*)
 }
 
 
-
-
-void MainWindow::on_horizontalSlider_valueChanged(int value)
-{
-       position.setX(value);
-     laod();
-}
-
-void MainWindow::on_horizontalSlider_2_valueChanged(int value)
-{
-    position.setY(value);
-    laod();
-}
-
-void MainWindow::laod()
-{
-   // Scene3 scene(this->size().width(),this->size().height());
-
-  //  scene.add(Vector3(100,100,100));
-  //  Square3 s = Square3(Vector3(200,200,200), 100);
-  //  scene.add(s);
-
-  //  scene.add(Cube(Vector3(0,0,1500), 100));
-
-  //  Cube cub = Cube(Vector3(200,0,1000), 50);
-    //cub.rotateAroundY(Vector3(200,0,0),20);
-   //scene.add(cub);
-
-
-      //  scene.add( Line3(Vector3(0,0,1000),Vector3(0,0,-1000)));
-   //  scene.add(Cube(Vector3(800,300,400), 50));
-
-   // scene.add(Cube(Vector3(100,100,100),100));
-  //  s.rotateAroundX(Vector3(200,200,200),30);
-   // scene.add(s);
-
-    img = scene.render(position, rotation);
-
-
-   update();
-}
-
-void MainWindow::on_horizontalSlider_3_valueChanged(int value)
-{
-    position.setZ(value);
-    laod();
-}
-
-void MainWindow::on_verticalSlider_valueChanged(int value)
-{
-    rotation.setX(value);
-    laod();
-}
-
-
-void MainWindow::on_verticalSlider_2_valueChanged(int value)
-{
-    rotation.setY(value);
-    laod();
-}
-
-void MainWindow::on_verticalSlider_3_valueChanged(int value)
-{
-    rotation.setZ(value);
-    laod();
-}
-
-
 void MainWindow::on_pushButton_clicked()
 {
-    img = scene.render( Vector3(0,0,-100), Vector3(0,0,0)).scaledToWidth(1920);
+    img = scene.render(Vector3(0,0,-100), Vector3(0,0,0)).scaledToWidth(1920);
     update();
 }
 
@@ -156,3 +124,15 @@ void MainWindow::on_pushButton_4_clicked()
 }
 
 
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    img = scene.render(Vector3(100,0,0), Vector3(0,0,0)).scaledToWidth(1920);
+    update();
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    img = scene.render(Vector3(-100,0,0), Vector3(0,0,0)).scaledToWidth(1920);
+    update();
+}

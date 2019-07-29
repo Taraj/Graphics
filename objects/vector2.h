@@ -7,9 +7,10 @@
 class Vector2 {
 public:
     Vector2(const int &x = 0, const int &y = 0);
+
     Vector2(const Vector2 &vector);
     Vector2(const Vector2 &&vector);
-    double distance(const Vector2 &vector);
+    double distance(const Vector2 &vector) const;
     void rotateAround(const Vector2 &vector, double angleInDegree);
     Vector2 operator+(const Vector2 &vector);
     Vector2 operator-(const Vector2 &vector);
@@ -20,9 +21,8 @@ public:
     int getY();
     void setX(const int &x);
     void setY(const int &y);
-
-private:
     Vector2(const double &x, const double &y);
+    Vector2(const unsigned int &x, const unsigned int &y);
     double x;
     double y;
 };
