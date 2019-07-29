@@ -21,6 +21,8 @@ private:
     const unsigned int width;
     const unsigned int height;
     const Vector2 screenCenter;
+    const Vector3 baseVector = Vector3(0, 0, -1000);
+    const unsigned int magicNumber = 2000;
 
 
     const QImage floorSprite = QImage(":/orig.jpg").scaledToWidth(500);

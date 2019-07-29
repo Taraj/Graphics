@@ -6,6 +6,8 @@
 #include <QImage>
 #include <objects/vector3.h>
 #include <util/scene3.h>
+#include <QKeyEvent>
+#include <QMouseEvent>
 
 namespace Ui {
 class MainWindow;
@@ -18,23 +20,27 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    const unsigned int ratio = 2;
-    Scene3 scene = Scene3(1920/ratio, 1020/ratio);
+    const unsigned int ratio = 3;
+    const unsigned int speed = 4;
+
+    const Vector3 forward = Vector3(0, 0, -10 * static_cast<int>(speed));
+    const Vector3 backward = Vector3(0, 0, 10 * static_cast<int>(speed));
+    const Vector3 left = Vector3(10 * static_cast<int>(speed), 0, 0);
+    const Vector3 right = Vector3(-10 * static_cast<int>(speed), 0, 0);
+
+    const Vector3 neutral = Vector3(0, 0, 0);
+
+    double lastMouse = 0;
+    Scene3 scene = Scene3(1920 / ratio, 1020 / ratio);
 private slots:
 
+    void keyPressEvent(QKeyEvent *event);
+
+    void mouseMoveEvent(QMouseEvent *event);
+
+    void mousePressEvent(QMouseEvent *event);
+
     void paintEvent(QPaintEvent*);
-
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
-
-    void on_pushButton_3_clicked();
-
-    void on_pushButton_4_clicked();
-
-    void on_pushButton_5_clicked();
-
-    void on_pushButton_6_clicked();
 
 private:
     Ui::MainWindow *ui;  

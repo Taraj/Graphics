@@ -10,7 +10,6 @@ public:
     void rotateAroundY(const Vector3 &vector, const double &angleInDegree);
     void rotateAroundZ(const Vector3 &vector, const double &angleInDegree);
     void translate(const Vector3 &vector);
-    Vector3 getNormalVector() const;
 
     Vector3 center;
     Vector3 a, b, c, d;

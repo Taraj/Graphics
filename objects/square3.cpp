@@ -25,16 +25,12 @@ void Square3::rotateAroundY(const Vector3 &vector, const double &angleInDegree){
     d.rotateAroundY(vector, angleInDegree);
 }
 
-void Square3::rotateAroundZ(const Vector3 &vector, const double & angleInDegree){
+void Square3::rotateAroundZ(const Vector3 &vector, const double &angleInDegree){
     center.rotateAroundZ(vector, angleInDegree);
     a.rotateAroundZ(vector, angleInDegree);
     b.rotateAroundZ(vector, angleInDegree);
     c.rotateAroundZ(vector, angleInDegree);
     d.rotateAroundZ(vector, angleInDegree);
-}
-
-Vector3 Square3::getNormalVector() const {
-   return (this->a - this->b).crossProduct((this->b - this->c));
 }
 
 void Square3::translate(const Vector3 &vector){

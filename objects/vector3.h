@@ -14,8 +14,6 @@ public:
     void rotateAroundZ(const Vector3 &vector, const double &angleInDegree);
     void transalte(const Vector3 &vector);
 
-    Vector3 crossProduct(const Vector3 &vector) const;
-    double dotProduct(const Vector3 &vector) const;
     Vector3 operator+(const Vector3 &vector) const;
     Vector3 operator-(const Vector3 &vector) const;
 

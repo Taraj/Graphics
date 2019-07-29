@@ -3,10 +3,8 @@
 
 
 Vector3::Vector3(const int &x, const int &y, const int &z): x(x), y(y), z(z){
-
 }
 Vector3::Vector3(const double &x, const double &y, const double &z): x(x), y(y), z(z){
-
 }
 
 void Vector3::rotateAroundX(const Vector3 &vector,  const double &angleInDegree){
@@ -42,7 +40,7 @@ void Vector3::rotateAroundZ(const Vector3 &vector, const double &angleInDegree){
 }
 
 Vector3 Vector3::operator+(const Vector3 &vector) const{
-       return Vector3(this->x + vector.x, this->y + vector.y, this->z + vector.z);
+    return Vector3(this->x + vector.x, this->y + vector.y, this->z + vector.z);
 }
 
 Vector3 Vector3::operator-(const Vector3 &vector) const {
@@ -50,19 +48,7 @@ Vector3 Vector3::operator-(const Vector3 &vector) const {
 }
 
 void Vector3::transalte(const Vector3 &vector){
-    this->x+=vector.x;
-    this->y+=vector.y;
-    this->z+=vector.z;
-}
-
-Vector3 Vector3::crossProduct(const Vector3 &vector) const {
-  return Vector3(
-              this->y*vector.z - this->z*vector.y,
-              this->z*vector.x - this->x*vector.z,
-              this->x*vector.y - this->y*vector.x
-              );
-}
-
-double Vector3::dotProduct(const Vector3 &vector) const {
-    return this->x * vector.x + this->y * vector.y + this->z * vector.z;
+    this->x += vector.x;
+    this->y += vector.y;
+    this->z += vector.z;
 }

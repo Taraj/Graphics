@@ -1,15 +1,12 @@
 #include "scene3.h"
 
-Scene3::Scene3(const unsigned int &width, const unsigned int &height): width(width), height(height), screenCenter(width/2, height/2){
+Scene3::Scene3(const unsigned int &width, const unsigned int &height): width(width), height(height), screenCenter(width / 2, height / 2){
 
 }
 
 QImage Scene3::render(const Vector3 &position, const Vector3 &rotation){
     QImage image = QImage(static_cast<int>(this->width), static_cast<int>(this->height), QImage::Format_RGB32);
     image.fill(0);
-
-
-    Vector3 baseVector = Vector3(0, 0, 0);
 
     unsigned char *ptr = image.bits();  
 
@@ -49,7 +46,7 @@ QImage Scene3::render(const Vector3 &position, const Vector3 &rotation){
 }
 
 bool Scene3::inArea(const Vector2 &a){
-    return a.x >= 0 && a.x < static_cast<int>(width)  && a.y>= 0 && a.y < static_cast<int>(height);
+    return a.x >= 0 && a.x < static_cast<int>(width)  && a.y >= 0 && a.y < static_cast<int>(height);
 }
 
 void Scene3::drawSquare(const Square3 &square, unsigned char *ptr, const unsigned char *texture){
@@ -100,8 +97,6 @@ void Scene3::drawTriangle(const Vector3 &a, const Vector3 &b, const Vector3 &c, 
     const bool aNotInArea = !inArea(a2);
     const bool bNotInArea = !inArea(b2);
     const bool cNotInArea = !inArea(c2);
-
-    const unsigned int magicNumber = 2000;
 
     if (aNotInArea && bNotInArea && cNotInArea) {
         if(a2.distance(c2) < magicNumber && a2.distance(b2) < magicNumber && b2.distance(c2) < magicNumber){
