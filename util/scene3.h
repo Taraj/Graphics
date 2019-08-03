@@ -15,6 +15,10 @@ public:
     std::vector<Square3> floor;
     std::vector<Square3> walls;
     std::vector<Square3> ceiling;
+    std::vector<Square3> specialFloor;
+
+    void addUniqueWall(const Square3 &wall);
+    void addSpecialFloor(const Square3 &wall);
 private:
     constexpr static const double d = 1000;
 
@@ -22,17 +26,20 @@ private:
     const unsigned int height;
     const Vector2 screenCenter;
     const Vector3 baseVector = Vector3(0, 0, -1000);
-    const unsigned int magicNumber = 2000;
+    const unsigned int magicNumber = 2500;
 
 
     const QImage floorSprite = QImage(":/orig.jpg").scaledToWidth(500);
     const QImage wallSprite = QImage(":/stone.jpg").scaledToWidth(500);
     const QImage ceilingSprite = QImage(":/coble.jpg").scaledToWidth(500);
+    const QImage specialFloorSprite = QImage(":/brick1.jpg").scaledToWidth(500);
 
 
     const unsigned char *floorTexture = floorSprite.bits();
     const unsigned char *wallTexture = wallSprite.bits();
     const unsigned char *ceilingTexture = ceilingSprite.bits();
+    const unsigned char *specialFloorTexture = specialFloorSprite.bits();
+
 
 
     inline bool inArea(const Vector2 &vector);

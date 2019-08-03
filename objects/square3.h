@@ -10,7 +10,9 @@ public:
     void rotateAroundY(const Vector3 &vector, const double &angleInDegree);
     void rotateAroundZ(const Vector3 &vector, const double &angleInDegree);
     void translate(const Vector3 &vector);
-
+    bool operator==(const Square3& rhs){
+        return center == rhs.center;
+    }
     Vector3 center;
     Vector3 a, b, c, d;
 

@@ -29,6 +29,7 @@ SOURCES += \
         mainwindow.cpp \
     objects/vector2.cpp \
     objects/vector3.cpp \
+    util/node.cpp \
     util/scene3.cpp \
     objects/square3.cpp
 
@@ -36,6 +37,7 @@ HEADERS += \
         mainwindow.h \
     objects/vector2.h \
     objects/vector3.h \
+    util/node.h \
     util/scene3.h \
     objects/square3.h
 
