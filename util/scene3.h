@@ -5,7 +5,11 @@
 #include <objects/vector3.h>
 #include <objects/square3.h>
 #include <QImage>
-
+#include <QList>
+#include <QThread>
+#include <QtConcurrent/QtConcurrent>
+#include <QFutureWatcher>
+#include <QThreadPool>
 class Scene3 {
 public:
     Scene3(const unsigned int &width, const unsigned int &height);
@@ -17,10 +21,12 @@ public:
     std::vector<Square3> ceiling;
     std::vector<Square3> specialFloor;
 
+
     void addUniqueWall(const Square3 &wall);
     void addSpecialFloor(const Square3 &wall);
 private:
     constexpr static const double d = 1000;
+    constexpr static const int drawRange = 500;
 
     const unsigned int width;
     const unsigned int height;

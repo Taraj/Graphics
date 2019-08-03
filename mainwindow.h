@@ -24,8 +24,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    const unsigned int ratio = 2;
-    const unsigned int speed = 4;
+    const unsigned int ratio = 1;
+    const unsigned int speed = 1;
 
     const Vector3 forward = Vector3(0, 0, -10 * static_cast<int>(speed));
     const Vector3 backward = Vector3(0, 0, 10 * static_cast<int>(speed));
@@ -36,7 +36,7 @@ public:
 
 
     Vector2 lastMouse = Vector2(0, 0);
-    Scene3 scene = Scene3(1920 / ratio, 1020 / ratio); 
+    Scene3 scene = Scene3(1920 / ratio, 1020 / ratio);
 
 
 

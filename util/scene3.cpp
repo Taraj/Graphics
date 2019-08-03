@@ -5,53 +5,138 @@ Scene3::Scene3(const unsigned int &width, const unsigned int &height): width(wid
 }
 
 QImage Scene3::render(const Vector3 &position, const Vector3 &rotation){
+
     QImage image = QImage(static_cast<int>(this->width), static_cast<int>(this->height), QImage::Format_RGB32);
     image.fill(0);
 
     unsigned char *ptr = image.bits();  
 
+    QThreadPool pool;
 
-    for (unsigned int i = 0; i < floor.size(); i++) {
-        floor[i].translate(position);
-        floor[i].rotateAroundY(baseVector, rotation.y);
+    constexpr unsigned int stepL = 5000;
 
+     //Walls
+    QtConcurrent::run(&pool, [=]() {
+         QThreadPool localPool;
+         int i = 0;
+         for (i = 0; i < static_cast<int>(walls.size() - stepL); i += stepL) {
+             QtConcurrent::run(&localPool, [=](unsigned int i) {
+                 for (unsigned int j = i; j < i + stepL; j++) {
+                     walls[j].translate(position);
+                     walls[j].rotateAroundY(baseVector, rotation.y);
+                 }
+             }, i);
+         }
 
-       // floor[i].rotateAroundX(baseVector, rotation.x);
-    }
+         QtConcurrent::run(&localPool, [=]() {
+             for (unsigned int j = static_cast<unsigned int>(i); j < walls.size(); j++) {
+                 walls[j].translate(position);
+                 walls[j].rotateAroundY(baseVector, rotation.y);
+             }
+         });
 
-    for (unsigned int i = 0; i < ceiling.size(); i++) {
-        ceiling[i].translate(position);
-        ceiling[i].rotateAroundY(baseVector, rotation.y);
-
-        //ceiling[i].rotateAroundX(baseVector, rotation.x);
-    }
-
-    for (unsigned int i = 0; i < walls.size(); i++) {
-        walls[i].translate(position);
-        walls[i].rotateAroundY(baseVector, rotation.y);
-
-
-       // walls[i].rotateAroundX(baseVector, rotation.x);
-    }
-
-    for(Square3 &square : floor) {
-        drawSquare(square, ptr, floorTexture);
-    }
-
-    for(Square3 &square : ceiling) {
-        drawSquare(square, ptr, ceilingTexture);
-    }
-
-    std::sort(walls.begin(), walls.end(), [](const Square3 &a, const Square3 &b) -> bool {
-         return a.center.z > b.center.z;
+        localPool.waitForDone();
     });
+
+    //floor
+    QtConcurrent::run(&pool, [=]() {
+        QThreadPool localPool;
+        int i = 0;
+        for (i = 0; i < static_cast<int>(floor.size() - stepL); i += stepL) {
+            QtConcurrent::run(&localPool, [=](unsigned int i) {
+                for (unsigned int j = i; j < i + stepL; j++) {
+                    floor[j].translate(position);
+                    floor[j].rotateAroundY(baseVector, rotation.y);
+                }
+            }, i);
+        }
+
+        QtConcurrent::run(&localPool, [=]() {
+            for (unsigned int j = static_cast<unsigned int>(i); j < floor.size(); j++) {
+                floor[j].translate(position);
+                floor[j].rotateAroundY(baseVector, rotation.y);
+            }
+        });
+
+       localPool.waitForDone();
+    });
+
+    //ceiling
+    QtConcurrent::run(&pool, [=]() {
+        QThreadPool localPool;
+        int i = 0;
+        for (i = 0; i < static_cast<int>(ceiling.size() - stepL); i += stepL) {
+            QtConcurrent::run(&localPool, [=](unsigned int i) {
+                for (unsigned int j = i; j < i + stepL; j++) {
+                    ceiling[j].translate(position);
+                    ceiling[j].rotateAroundY(baseVector, rotation.y);
+                }
+            }, i);
+        }
+
+        QtConcurrent::run(&localPool, [=]() {
+            for (unsigned int j = static_cast<unsigned int>(i); j < ceiling.size(); j++) {
+                ceiling[j].translate(position);
+                ceiling[j].rotateAroundY(baseVector, rotation.y);
+            }
+        });
+
+       localPool.waitForDone();
+    });
+
+    //specialFloor
+    QtConcurrent::run(&pool, [=]() {
+        QThreadPool localPool;
+        int i = 0;
+        for (i = 0; i < static_cast<int>(specialFloor.size() - stepL); i += stepL) {
+            QtConcurrent::run(&localPool, [=](unsigned int i) {
+                for (unsigned int j = i; j < i + stepL; j++) {
+                    specialFloor[j].translate(position);
+                    specialFloor[j].rotateAroundY(baseVector, rotation.y);
+                }
+            }, i);
+        }
+
+        QtConcurrent::run(&localPool, [=]() {
+            for (unsigned int j = static_cast<unsigned int>(i); j < specialFloor.size(); j++) {
+                specialFloor[j].translate(position);
+                specialFloor[j].rotateAroundY(baseVector, rotation.y);
+            }
+        });
+
+       localPool.waitForDone();
+    });
+
+    pool.waitForDone();
+
+    QtConcurrent::run(&pool, [=]() {
+          for(Square3 &square : floor) {
+              drawSquare(square, ptr, floorTexture);
+          }
+          for(Square3 &square : specialFloor) {
+              drawSquare(square, ptr, specialFloorTexture);
+          }
+    });
+
+    QtConcurrent::run(&pool, [=]() {
+          for(Square3 &square : ceiling) {
+            drawSquare(square, ptr, ceilingTexture);
+          }
+    });
+
+
+    QtConcurrent::run(&pool, [=]() {
+          std::sort(walls.begin(), walls.end(), [](const Square3 &a, const Square3 &b) -> bool {
+               return a.center.z > b.center.z;
+          });
+    });
+
+
+    pool.waitForDone();
+
 
     for(Square3 &square : walls) {
         drawSquare(square, ptr, wallTexture);
-    }
-
-    for(Square3 &square : specialFloor) {
-        drawSquare(square, ptr, specialFloorTexture);
     }
 
     return image;
@@ -75,9 +160,10 @@ bool Scene3::inArea(const Vector2 &a){
 
 void Scene3::drawSquare(const Square3 &square, unsigned char *ptr, const unsigned char *texture){
 
-    if(square.center.z < -d){
+    if(square.center.z < -d || square.center.z > drawRange){
         return;
     }
+
 
     drawTriangle(
                 square.a,
@@ -96,6 +182,7 @@ void Scene3::drawSquare(const Square3 &square, unsigned char *ptr, const unsigne
                 false,
                 texture
                 );
+
 }
 
 Vector2 Scene3::convert(const Vector3 &vector){

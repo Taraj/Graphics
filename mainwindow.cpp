@@ -10,11 +10,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     for (unsigned int i = 0; i < areaSize; i++) {
         nodes[i] = new Node[areaSize];
     }
-
+    std::cout<<"alock"<<std::endl;
     dfs(0, 0);
-
+    std::cout<<"dfs"<<std::endl;
     initScene(nodes);
-
+    std::cout<<"init"<<std::endl;
     img = scene.render(Vector3(0, 0, 0), Vector3(0, 0, 0)).scaledToWidth(1920);
     update();;
 }
@@ -68,10 +68,10 @@ bool MainWindow::inArea(int x, int y){
 
 
 void MainWindow::initScene(Node **nodes){
-    const unsigned int squareSize = 50;
+    const unsigned int squareSize = 10;
     const unsigned int squaresPerWall = 10;
     const unsigned int size = squareSize * squaresPerWall;
-    const int floor = 200;
+    const int floor = 50;
     Square3 tmp(Vector3(0,0,0), size);
 
     for (unsigned int i = 0; i < areaSize; i++) {
@@ -136,6 +136,17 @@ void MainWindow::initScene(Node **nodes){
             }
         }
     }
+
+    const int x = static_cast<int>(squareSize - size);
+    const int y = static_cast<int>(squareSize - 1000 - size);
+    for (unsigned int kx = 0; kx < squaresPerWall; kx++) {
+        for (unsigned int ky = 0; ky < squaresPerWall; ky++) {
+            tmp = Square3(Vector3(x + static_cast<int>(kx * squareSize * 2), floor, y + static_cast<int>(ky * squareSize * 2)), static_cast<int>(squareSize));
+            tmp.rotateAroundX(tmp.center, 90);
+            scene.addSpecialFloor(tmp);
+        }
+    }
+
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event){
