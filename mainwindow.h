@@ -24,7 +24,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    const unsigned int ratio = 1;
+    const unsigned int ratio = 2;
     const unsigned int speed = 4;
 
     const Vector3 forward = Vector3(0, 0, -10 * static_cast<int>(speed));

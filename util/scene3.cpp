@@ -16,14 +16,14 @@ QImage Scene3::render(const Vector3 &position, const Vector3 &rotation){
         floor[i].rotateAroundY(baseVector, rotation.y);
 
 
-        floor[i].rotateAroundX(baseVector, rotation.x);
+       // floor[i].rotateAroundX(baseVector, rotation.x);
     }
 
     for (unsigned int i = 0; i < ceiling.size(); i++) {
         ceiling[i].translate(position);
         ceiling[i].rotateAroundY(baseVector, rotation.y);
 
-        ceiling[i].rotateAroundX(baseVector, rotation.x);
+        //ceiling[i].rotateAroundX(baseVector, rotation.x);
     }
 
     for (unsigned int i = 0; i < walls.size(); i++) {
@@ -31,7 +31,7 @@ QImage Scene3::render(const Vector3 &position, const Vector3 &rotation){
         walls[i].rotateAroundY(baseVector, rotation.y);
 
 
-        walls[i].rotateAroundX(baseVector, rotation.x);
+       // walls[i].rotateAroundX(baseVector, rotation.x);
     }
 
     for(Square3 &square : floor) {
@@ -39,7 +39,7 @@ QImage Scene3::render(const Vector3 &position, const Vector3 &rotation){
     }
 
     for(Square3 &square : ceiling) {
-      //  drawSquare(square, ptr, ceilingTexture);
+        drawSquare(square, ptr, ceilingTexture);
     }
 
     std::sort(walls.begin(), walls.end(), [](const Square3 &a, const Square3 &b) -> bool {
