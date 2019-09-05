@@ -10,6 +10,10 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QFutureWatcher>
 #include <QThreadPool>
+
+
+//#define ALLOW_FLY
+
 class Scene3 {
 public:
     Scene3(const unsigned int &width, const unsigned int &height);

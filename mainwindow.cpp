@@ -10,11 +10,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     for (unsigned int i = 0; i < areaSize; i++) {
         nodes[i] = new Node[areaSize];
     }
-    std::cout<<"alock"<<std::endl;
-    dfs(0, 0);
-    std::cout<<"dfs"<<std::endl;
+
+    dfs(0, 0, 0);
+
     initScene(nodes);
-    std::cout<<"init"<<std::endl;
+
+    for (unsigned int i = 0; i < areaSize; i++) {
+        delete [] nodes[i];
+    }
+    delete [] nodes;
+
     img = scene.render(Vector3(0, 0, 0), Vector3(0, 0, 0)).scaledToWidth(1920);
     update();;
 }
@@ -23,46 +28,53 @@ MainWindow::~MainWindow(){
     delete ui;
 }
 
-void MainWindow::dfs(int x, int y){
+void MainWindow::dfs(const int &x, const int &y, const int &length){
     nodes[x][y].visited = true;
     std::array<int, 4> arr = { 1, 2, 3, 4 };
     std::random_shuffle(arr.begin(), arr.end());
-
+    bool isEnd = true;
     for (int& number : arr) {
         switch (number) {
             case 1:
                 if(inArea(x + 1, y) && !nodes[x + 1][y].visited){
+                    isEnd = false;
                     nodes[x][y].right = true;
                     nodes[x + 1][y].left = true;
-                    dfs(x + 1, y);
+                    dfs(x + 1, y, length + 1);
                 }
                 break;
             case 2:
                 if(inArea(x - 1, y) && !nodes[x - 1][y].visited){
+                    isEnd = false;
                     nodes[x][y].left = true;
                     nodes[x - 1][y].right = true;
-                    dfs(x - 1, y);
+                    dfs(x - 1, y, length + 1);
                 }
                 break;
             case 3:
                 if(inArea(x, y + 1) && !nodes[x][y + 1].visited){
+                     isEnd = false;
                      nodes[x][y].forward = true;
                      nodes[x][y + 1].backward = true;
-                     dfs(x, y + 1);
+                     dfs(x, y + 1, length + 1);
                 }
                 break;
             case 4:
                 if(inArea(x, y - 1) && !nodes[x][y - 1].visited){
+                     isEnd = false;
                      nodes[x][y].backward = true;
                      nodes[x][y - 1].forward = true;
-                     dfs(x, y - 1);
+                     dfs(x, y - 1, length + 1);
                 }
                 break;
         }
     }
+    if(isEnd){
+        possibleEndings.push_back(std::make_pair(length, Vector2(x,y)));
+    }
 }
 
-bool MainWindow::inArea(int x, int y){
+bool MainWindow::inArea(const int &x, const int &y){
     return x >= 0 && y >= 0 && x < static_cast<int>(areaSize) && y < static_cast<int>(areaSize);
 }
 
@@ -137,16 +149,17 @@ void MainWindow::initScene(Node **nodes){
         }
     }
 
-    const int x = static_cast<int>(squareSize - size);
-    const int y = static_cast<int>(squareSize - 1000 - size);
-    for (unsigned int kx = 0; kx < squaresPerWall; kx++) {
-        for (unsigned int ky = 0; ky < squaresPerWall; ky++) {
-            tmp = Square3(Vector3(x + static_cast<int>(kx * squareSize * 2), floor, y + static_cast<int>(ky * squareSize * 2)), static_cast<int>(squareSize));
-            tmp.rotateAroundX(tmp.center, 90);
-            scene.addSpecialFloor(tmp);
-        }
-    }
 
+        const unsigned int endIndex = static_cast<unsigned int>(rand()) % static_cast<unsigned int>(possibleEndings.size());
+        const int x = static_cast<int>(possibleEndings[endIndex].second.x * size * 2 - size + squareSize);
+        for (unsigned int kx = 0; kx < squaresPerWall; kx++) {
+              const int y = static_cast<int>(possibleEndings[endIndex].second.y * size * 2 - 1000 - size + squareSize);
+            for (unsigned int ky = 0; ky < squaresPerWall; ky++) {
+                tmp = Square3(Vector3(x + static_cast<int>(kx * squareSize * 2), floor, y + static_cast<int>(ky * squareSize * 2)), static_cast<int>(squareSize));
+                tmp.rotateAroundX(tmp.center, 90);
+                scene.addSpecialFloor(tmp);
+            }
+        }
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event){

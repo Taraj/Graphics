@@ -16,22 +16,30 @@ QImage Scene3::render(const Vector3 &position, const Vector3 &rotation){
     constexpr unsigned int stepL = 5000;
 
      //Walls
-    QtConcurrent::run(&pool, [=]() {
+    QtConcurrent::run(&pool, [&]() {
          QThreadPool localPool;
          int i = 0;
          for (i = 0; i < static_cast<int>(walls.size() - stepL); i += stepL) {
-             QtConcurrent::run(&localPool, [=](unsigned int i) {
+             QtConcurrent::run(&localPool, [&](unsigned int i) {
                  for (unsigned int j = i; j < i + stepL; j++) {
                      walls[j].translate(position);
                      walls[j].rotateAroundY(baseVector, rotation.y);
+#ifdef ALLOW_FLY
+                     walls[j].rotateAroundX(baseVector, rotation.x);
+
+#endif
                  }
              }, i);
          }
 
-         QtConcurrent::run(&localPool, [=]() {
+         QtConcurrent::run(&localPool, [&]() {
              for (unsigned int j = static_cast<unsigned int>(i); j < walls.size(); j++) {
                  walls[j].translate(position);
                  walls[j].rotateAroundY(baseVector, rotation.y);
+#ifdef ALLOW_FLY
+                 walls[j].rotateAroundX(baseVector, rotation.x);
+
+#endif
              }
          });
 
@@ -39,34 +47,42 @@ QImage Scene3::render(const Vector3 &position, const Vector3 &rotation){
     });
 
     //floor
-    QtConcurrent::run(&pool, [=]() {
+    QtConcurrent::run(&pool, [&]() {
         QThreadPool localPool;
         int i = 0;
         for (i = 0; i < static_cast<int>(floor.size() - stepL); i += stepL) {
-            QtConcurrent::run(&localPool, [=](unsigned int i) {
+            QtConcurrent::run(&localPool, [&](unsigned int i) {
                 for (unsigned int j = i; j < i + stepL; j++) {
                     floor[j].translate(position);
                     floor[j].rotateAroundY(baseVector, rotation.y);
+#ifdef ALLOW_FLY
+                    floor[j].rotateAroundX(baseVector, rotation.x);
+
+#endif
                 }
             }, i);
         }
 
-        QtConcurrent::run(&localPool, [=]() {
+        QtConcurrent::run(&localPool, [&]() {
             for (unsigned int j = static_cast<unsigned int>(i); j < floor.size(); j++) {
                 floor[j].translate(position);
                 floor[j].rotateAroundY(baseVector, rotation.y);
+#ifdef ALLOW_FLY
+                floor[j].rotateAroundX(baseVector, rotation.x);
+
+#endif
             }
         });
 
        localPool.waitForDone();
     });
-
+#ifndef ALLOW_FLY
     //ceiling
-    QtConcurrent::run(&pool, [=]() {
+    QtConcurrent::run(&pool, [&]() {
         QThreadPool localPool;
         int i = 0;
         for (i = 0; i < static_cast<int>(ceiling.size() - stepL); i += stepL) {
-            QtConcurrent::run(&localPool, [=](unsigned int i) {
+            QtConcurrent::run(&localPool, [&](unsigned int i) {
                 for (unsigned int j = i; j < i + stepL; j++) {
                     ceiling[j].translate(position);
                     ceiling[j].rotateAroundY(baseVector, rotation.y);
@@ -74,7 +90,7 @@ QImage Scene3::render(const Vector3 &position, const Vector3 &rotation){
             }, i);
         }
 
-        QtConcurrent::run(&localPool, [=]() {
+        QtConcurrent::run(&localPool, [&]() {
             for (unsigned int j = static_cast<unsigned int>(i); j < ceiling.size(); j++) {
                 ceiling[j].translate(position);
                 ceiling[j].rotateAroundY(baseVector, rotation.y);
@@ -83,24 +99,32 @@ QImage Scene3::render(const Vector3 &position, const Vector3 &rotation){
 
        localPool.waitForDone();
     });
-
+#endif
     //specialFloor
-    QtConcurrent::run(&pool, [=]() {
+    QtConcurrent::run(&pool, [&]() {
         QThreadPool localPool;
         int i = 0;
         for (i = 0; i < static_cast<int>(specialFloor.size() - stepL); i += stepL) {
-            QtConcurrent::run(&localPool, [=](unsigned int i) {
+            QtConcurrent::run(&localPool, [&](unsigned int i) {
                 for (unsigned int j = i; j < i + stepL; j++) {
                     specialFloor[j].translate(position);
                     specialFloor[j].rotateAroundY(baseVector, rotation.y);
+#ifdef ALLOW_FLY
+                    specialFloor[j].rotateAroundX(baseVector, rotation.x);
+
+#endif
                 }
             }, i);
         }
 
-        QtConcurrent::run(&localPool, [=]() {
+        QtConcurrent::run(&localPool, [&]() {
             for (unsigned int j = static_cast<unsigned int>(i); j < specialFloor.size(); j++) {
                 specialFloor[j].translate(position);
                 specialFloor[j].rotateAroundY(baseVector, rotation.y);
+#ifdef ALLOW_FLY
+                specialFloor[j].rotateAroundX(baseVector, rotation.x);
+
+#endif
             }
         });
 
@@ -109,7 +133,7 @@ QImage Scene3::render(const Vector3 &position, const Vector3 &rotation){
 
     pool.waitForDone();
 
-    QtConcurrent::run(&pool, [=]() {
+    QtConcurrent::run(&pool, [&]() {
           for(Square3 &square : floor) {
               drawSquare(square, ptr, floorTexture);
           }
@@ -117,15 +141,15 @@ QImage Scene3::render(const Vector3 &position, const Vector3 &rotation){
               drawSquare(square, ptr, specialFloorTexture);
           }
     });
-
-    QtConcurrent::run(&pool, [=]() {
+#ifndef ALLOW_FLY
+    QtConcurrent::run(&pool, [&]() {
           for(Square3 &square : ceiling) {
             drawSquare(square, ptr, ceilingTexture);
           }
     });
+#endif
 
-
-    QtConcurrent::run(&pool, [=]() {
+    QtConcurrent::run(&pool, [&]() {
           std::sort(walls.begin(), walls.end(), [](const Square3 &a, const Square3 &b) -> bool {
                return a.center.z > b.center.z;
           });

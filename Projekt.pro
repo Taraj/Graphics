@@ -53,3 +53,4 @@ RESOURCES += \
     assets.qrc
 
 DISTFILES +=
+QMAKE_CXXFLAGS += -O3

@@ -41,9 +41,10 @@ public:
 
 
     const unsigned int areaSize = 10;
-    void dfs(int x, int y);
-    bool inArea(int x, int y);
+    void dfs(const int &x, const int &y, const int &length);
+    bool inArea(const int &x, const int &y);
     Node **nodes;
+    std::vector<std::pair<int, Vector2>> possibleEndings;
 
     void initScene(Node** nodes);
 
